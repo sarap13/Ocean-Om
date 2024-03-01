@@ -12,6 +12,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+import stripe
 
 # from models import Person
 
@@ -43,6 +44,9 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+# pasamos la key de stripe 
+stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
 
 
 # Add all endpoints form the API with a "api" prefix

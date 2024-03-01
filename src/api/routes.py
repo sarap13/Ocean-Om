@@ -7,11 +7,17 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import datetime, timedelta
+# instalar pipenv stripe
+import stripe
+import json
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+
+# pasamos la key de stripe 
+stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
 
 # 
 # Aquí haremos la rutas de backend
@@ -245,3 +251,90 @@ def unsubscribe():
         return jsonify({
             "msg": "User not found"
         }), 404
+
+
+
+# hay que importar stripe!!!!
+# arriba se pone la clave de stripe
+#endpoint para desuscribirse
+@api.route("/checkout", methods=["POST"])
+# @jwt_required()
+def processing_payment():
+    try:
+        data = json.loads(request.data)
+        # Create a PaymentIntent with the order amount and currency
+        intent = stripe.PaymentIntent.create(
+            amount=calculate_order_amount(data['items']),
+            currency='eur',
+            # In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+            automatic_payment_methods={
+                'enabled': True,
+            },
+        )
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+
+
+        print (data)
+        # Obtienes el id del usuario por el token
+        current_user_email = get_jwt_identity()
+        user = User.query.filter_by(email=current_user_email).first()
+
+        # si no está en usuario
+        if not user:
+            return jsonify({"msg": "User not found"}), 404
+        
+        # Crea una sesión de checkout para la suscripción
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
+                'quantity': 1,
+            }],
+            mode='subscription',
+            success_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
+            cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html',
+            customer=user.stripe_customer_id,  # ID del cliente de Stripe
+        )
+
+        # Devuelve una respuesta exitosa si todo está bien
+        return jsonify({"message": "Payment processed successfully"}), 200
+
+    except error.StripeError as e:
+        return jsonify({"error": str(e)}), 500
+    # # llamamos a lo que nos envian
+    # request_body = request.json
+    # data = request_body
+
+    # id = data.get('id')
+    # amount = data.get('amount')
+    # print(data)
+    # print(request_body)
+    # response_body = {
+    #     "msg": "the payment has been proceed",
+    #     "access_token": access_token
+    #     }
+    
+
+    # checkout_register_session = stripe.checkout.create(
+    #     subscription = {
+    #         'price': "price_1OpFEfIidK9VIejHfobZkWvI",
+    #         'quantity': 1
+    #     },
+    #     mode="subscription",
+    #     succes_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
+    #     cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html'
+    # )
+    # return redirect(checkout_register_session.url, code=303)
+
+        # charge = stripe.Charge.create(
+        #     amount=1000,  # Monto en centavos (por ejemplo, $10.00)
+        #     currency='usd',
+        #     source=token,  # Token de pago generado por Stripe Elements
+        #     description='Pago mensual de suscripción'
+        # )
+    
