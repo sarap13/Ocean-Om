@@ -14,10 +14,7 @@ import { UserProfile } from "./pages/userProfile";
 
 // import { CheckoutForm } from "./pages/login";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
 import { CheckoutForm } from "./component/checkoutForm";
-import { Login } from "./pages/login"; 
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 
