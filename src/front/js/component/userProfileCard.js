@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { withRouter, useParams } from "react-router-dom";
 import "../../styles/login.css";
 
 
-export const UserProfileCard = () => {
+export const UserProfileCard = props => {
 
     const [state, setState] = useState({
         //initialize state here
@@ -14,23 +14,18 @@ export const UserProfileCard = () => {
 
     // activamos el useNavigate
     const navigate = useNavigate();
-
     const { store, actions } = useContext(Context)
-
-    const [email, setUserEmail] = useState("");
-    const [password, setPassword] = useState("")
-
-
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
+    
+    console.log(props.name)
 
     return (
-        /*añadimos esto para poder meter en toast*/
-        <>
             <div className="container-fluid stylebackgroundimg card d-flex flex-column justify-content-center h-100 align-items-center opacity-50 p-5">
 
                     <div className="card-body text-center row">
-                        <img src="https://149355309.v2.pressablecdn.com/wp-content/uploads/2015/03/216620548197708192.jpg" className="card-img-top w-25 rounded mx-auto d-block" alt="..." />
+                        <img src="https://149355309.v2.pressablecdn.com/wp-content/uploads/2015/03/216620548197708192.jpg" className="card-img-top w-25 rounded mx-auto d-block rounded-circle" alt="..." />
 
-                        <h5 className="card-title mt-4">Sara Parra</h5>
+                        <h5 className="card-title mt-4">{props.user.name} {props.user.last_name}</h5>
                         <h6 className="card-text">saraparra13@gmail.com</h6>
                         <h6 className="fs-6 fst-italic">Member from Frebuary 2023</h6>
 
@@ -51,7 +46,15 @@ export const UserProfileCard = () => {
                     </div>
                 </div>
             </div>
-        </>
     );
 };
-{/* <div src="https://www.sattology.com/wp-content/uploads/2020/06/simbolo-do-om-ornamental_1058-101.jpg"></div>  ((((esta es la foto de omkara que va en la derecha)))*/ }
+UserProfileCard.propTypes = {
+	match: PropTypes.object,
+    id: PropTypes.number,
+    name: PropTypes.string,
+    last_name: PropTypes.string,
+    date_of_birth: PropTypes.string,
+	email: PropTypes.string,
+	subscription_start_date: PropTypes.string,
+
+};

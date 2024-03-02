@@ -29,6 +29,9 @@ class User(db.Model):
             "name": self.name,
             "last_name": self.last_name,
             "email": self.email,
+            "date_of_birth": self.date_of_birth,
+            "subscription_start_date": self.subscription_start_date,
+            
             # do not serialize the password, its a security breach
         }
     

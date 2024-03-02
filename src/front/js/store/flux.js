@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			user: [],
+			loggedUSer: null,
 			jivamuktiYoga: [],
 			jivamuktiSessionInfo: {},
 			vinyasaYoga: [],
@@ -83,6 +84,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
+					localStorage.setItem("user", JSON.stringify(data.user)) //para convertir los datos en string
+					setStore({loggedUSer: data})
 					console.log(data);
 					return true
 				} catch (error) {
@@ -90,13 +93,44 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+
+			getUserProfile: async () => {
+				let token = localStorage.getItem("token")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + `/api/user`, {
+						method: "GET",
+						headers: {
+							"Authorization": `Bearer ${token}` //pondremos el token en headers
+						},
+					});
+					let data = await response.json();
+					// console.log("funciona")
+					// console.log(data);
+					if (response.status === 200) {
+				// 	// // 	const userDetailsWithId = {
+				// 	// // 		...data.user
+				// 	// // 	};
+						setStore({ user: data.user });
+				// 	// // 	console.log(store.user)
+					}
+					return true
+				} catch (err) {
+					console.error(err);
+					return false
+				}
+			},
+
+
+
+
+
 			getAllSessions: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/yogatype");
-					console.log(response.status);
+					// console.log(response.status);
 					if (response.status === 200) {
 						const data = await response.json();
-						console.log(data);
+						// console.log(data);
 						setStore({ jivamuktiYoga: data.jivamukti_sessions, vinyasaYoga: data.vinyasa_sessions, hathaYoga: data.hatha_sessions, ashtangaYoga: data.ashtanga_sessions, rocketYoga: data.rocket_sessions, meditation: data.meditation_sessions, harmonium: data.harmonium_sessions });
 						return true;
 					} else {
@@ -114,9 +148,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "GET",
 					});
 					let data = await response.json();
-					console.log(yogatype, yogatype_Id);
-					console.log(response.status);
-					console.log(data)
+					// console.log(yogatype, yogatype_Id);
+					// console.log(response.status);
+					// console.log(data)
 					if (response.status === 200) {
 						if (yogatype == 'jivamuktiyoga') {
 							setStore({ singleYogaSessionInfo: data.jivamukti_session })

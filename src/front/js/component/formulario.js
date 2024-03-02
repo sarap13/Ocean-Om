@@ -26,7 +26,7 @@ export const Formulario = () => {
         let logged = await actions.login(email, password);
         console.log(logged)
         if (logged) { //true
-            navigate("/");
+            navigate("/sessions");
         } else {
             toast.error("Invalid email or password");
         }

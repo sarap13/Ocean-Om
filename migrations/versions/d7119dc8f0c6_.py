@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b85dceac24a2
+Revision ID: d7119dc8f0c6
 Revises: 
-Create Date: 2024-03-01 19:44:17.031094
+Create Date: 2024-03-01 21:19:41.007506
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b85dceac24a2'
+revision = 'd7119dc8f0c6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,7 +38,7 @@ def upgrade():
     op.create_table('types_of_session',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('type', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=500), nullable=False),
+    sa.Column('description', sa.String(length=1000), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('type')
     )
@@ -46,7 +46,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -63,7 +63,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -80,7 +80,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -97,7 +97,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -114,7 +114,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -131,7 +131,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),
@@ -168,7 +168,6 @@ def upgrade():
     sa.Column('date_of_birth', sa.String(length=120), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
-    sa.Column('role', sa.Enum('Student', 'Instructor', name='role'), nullable=True),
     sa.Column('id_subscription', sa.Integer(), nullable=True),
     sa.Column('subscription_start_date', sa.String(length=120), nullable=True),
     sa.Column('last_payment_date', sa.String(length=120), nullable=True),
@@ -184,7 +183,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('subtitle', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('description', sa.String(length=300), nullable=False),
     sa.Column('link', sa.String(length=120), nullable=False),
     sa.Column('asana_focus', sa.String(length=120), nullable=False),
     sa.Column('level', sa.String(length=120), nullable=False),

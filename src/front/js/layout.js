@@ -15,7 +15,7 @@ import { UserProfile } from "./pages/userProfile";
 
 // import { CheckoutForm } from "./pages/login";
 
-import { CheckoutForm } from "./component/checkoutForm";
+import { PaymentCheckout } from "./pages/paymentcheckout.js"
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 
@@ -43,7 +43,7 @@ const Layout = () => {
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/paymentdetails" element={<CheckoutForm />} />
+                        <Route path="/paymentdetails" element={<PaymentCheckout />} />
                         <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
