@@ -29,11 +29,21 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user_query = User.query.filter_by(email=email).first()
-    if email != user_query.email or password != user_query.password:
-        return jsonify({"msg": "Bad email or password"}), 401    
-    access_token = create_access_token(identity=email)
-    return jsonify({"access_token":access_token,
-                    "user": user_query.serialize()   })
+
+    # Si el usuario no esta suscrito aunque esté registrado, la columna de is_subscription_active estara false
+    if user_query:
+        if not user_query.is_subscription_active:
+            return jsonify({"msg": "User not subscribed. Subscribe again to access content"}), 403
+        if password != user_query.password:
+            return jsonify({"msg": "Bad email or password"}), 401  
+        access_token = create_access_token(identity=email)
+
+        return jsonify({"access_token":access_token,
+                        "user": user_query.serialize()   })
+    if not user_query:
+        return jsonify({"msg": "Email not found"}), 401
+    
+
 # verificar el tiempo que ha pasado para cobrar a la persona
 
 #endpoint para traer a los usuarios

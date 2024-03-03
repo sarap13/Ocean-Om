@@ -43,7 +43,7 @@ const Layout = () => {
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/paymentdetails" element={<PaymentCheckout />} />
+                        {/* <Route path="/paymentdetails" element={<PaymentCheckout />} /> */}
                         <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
