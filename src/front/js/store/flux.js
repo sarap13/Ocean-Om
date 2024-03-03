@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
+			contactus: {}
 
 			// demo: [
 			// 	{
@@ -87,6 +88,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("token", data.access_token)
 					localStorage.setItem("user", JSON.stringify(data.user)) //para convertir los datos en string
 					setStore({ loggedUSer: data })
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			signup: async (name, lastname, date_of_birth, email, password, confirmPassword) => {
+				// console.log(name, lastname, date_of_birth, email, password, confirmPassword);
+				console.log("funciona")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/signup", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						// mode: 'cors',
+						body: JSON.stringify({
+							"email": email,
+							"password": password,
+							"name": name,
+							"last_name": lastname,
+							"date_of_birth": date_of_birth,
+							"role": "Student",
+							"plan": "Subscription"
+						})
+					})
+					let data = await response.json()
+					if (response.status === 401) {
+						return false;
+					}
+					localStorage.setItem("token", data.access_token)
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+			signupFree: async (name, lastname, date_of_birth, email, password, confirmPassword) => {
+				// console.log(name, lastname, date_of_birth, email, password, confirmPassword);
+				console.log("funciona")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/signup/freetrial", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						// mode: 'cors',
+						body: JSON.stringify({
+							"email": email,
+							"password": password,
+							"name": name,
+							"last_name": lastname,
+							"date_of_birth": date_of_birth,
+							"role": "Student"
+						})
+					})
+					let data = await response.json()
+					if (response.status === 401) {
+						return false;
+					}
+					localStorage.setItem("token", data.access_token)
 					console.log(data);
 					return true
 				} catch (error) {
@@ -220,6 +284,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			}
+			contactus: async (email, name, message) => {
+				// console.log(email, password);
+				// console.log("funciona")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/contactus", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						// mode: 'cors',
+						body: JSON.stringify({
+							"email": email,
+							"name": name,
+							"message": message
+						})
+					})
+					let data = await response.json()
+					if (response.status === 401) {
+						return false;
+					}
+					localStorage.setItem("token", data.access_token)
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
 
 
 
