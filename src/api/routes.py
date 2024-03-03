@@ -441,7 +441,7 @@ def signup():
         # next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
     else:
         last_payment_date = subscription_start_date
-        next_payment_date = subscription_start_date + timedelta(days=30)
+        next_payment_date = last_payment_date + timedelta(days=30)
 
     new_user = User(
         name=name, 

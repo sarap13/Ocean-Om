@@ -26,7 +26,6 @@ export const FormSignup = ({ freeTrial }) => {
         if (freeTrial) {
             logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
         } else {
-
             logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
         }
         console.log(logged)

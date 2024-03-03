@@ -271,19 +271,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					})
 					if (response.status === 200) {
-						console.log("unsubscribed")
+						// console.log("unsubscribed")
 						return true;
 					}
 					else {
 						throw new Error("Error unsubscribing");
 					}
 				} catch (error) {
-					console.error(error);
+					// console.error(error);
 					return false;
 				}
 
 
-			}
+			},
 			contactus: async (email, name, message) => {
 				// console.log(email, password);
 				// console.log("funciona")

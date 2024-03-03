@@ -21,10 +21,11 @@ export const UserProfileCard = props => {
 
 
     const handleClickUnsubscribe = () => {
-        const message = "¿Estás seguro de que quieres continuar?";
+        const message = "¿Are you sure you want to unsubscribe?";
         // Mostrar alert con botones "Aceptar" y "Cancelar"
+        // sale una alerta con el mensaje y el usuario puede elegir entre dos opciones
         const userChoice = window.confirm(message);
-        console.log(userChoice)
+        // Si el usuario le da a continuar, 
         if (userChoice) {
             actions.unsubscribe();
             navigate("/")
