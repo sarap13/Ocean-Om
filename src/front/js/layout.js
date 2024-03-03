@@ -10,7 +10,12 @@ import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.j
 import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
 import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
-import { Login } from "./pages/login"; 
+import { Login } from "./pages/login";
+import { UserProfile } from "./pages/userProfile";
+
+// import { CheckoutForm } from "./pages/login";
+
+import { PaymentCheckout } from "./pages/paymentcheckout.js"
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 import { Signup } from "./pages/signup";
@@ -44,6 +49,8 @@ const Layout = () => {
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
+                        {/* <Route path="/paymentdetails" element={<PaymentCheckout />} /> */}
+                        <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
                         <Route path="/aboutus" element={<AboutUs />} />
