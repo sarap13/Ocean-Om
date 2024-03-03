@@ -9,12 +9,13 @@ import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
 import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
 import injectContext from "./store/appContext";
-import { Login } from "./pages/login"; 
+import { Login } from "./pages/login";
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Testimonials } from "./component/testimonials.js";
 // import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
 
 //create your first component
@@ -26,7 +27,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div style={{backgroundColor: "#FBF9F1"}}>
+        <div style={{ backgroundColor: "#FBF9F1" }}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
@@ -37,6 +38,7 @@ const Layout = () => {
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/testimonials" element={<Testimonials />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
                         <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
