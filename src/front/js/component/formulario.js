@@ -22,15 +22,18 @@ export const Formulario = () => {
 
     async function handleLogin(e) {
         e.preventDefault()
-        console.log(email, password);
+        // console.log(email, password);
         let logged = await actions.login(email, password);
-        console.log(logged)
-        if (logged) { //true
-            navigate("/");
-        } else {
+        // console.log(logged)
+        if (logged === true) { // ponemos === true porque tiene mas valores, si ponemos solo logged acepta los errores al existir
+            navigate("/sessions");
+        }
+        if (logged === 401) {
             toast.error("Invalid email or password");
         }
-        // if (email )
+        if (logged === 403) {
+            toast.error("User not subscribed");
+        }
     }
 
     return (
@@ -73,4 +76,3 @@ export const Formulario = () => {
         </>
     );
 };
-{/* <div src="https://www.sattology.com/wp-content/uploads/2020/06/simbolo-do-om-ornamental_1058-101.jpg"></div>  ((((esta es la foto de omkara que va en la derecha)))*/ }
