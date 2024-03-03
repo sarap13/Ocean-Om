@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Subscription, Testimony, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
+from api.models import db, User, Subscription, Testimony, Contact, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from datetime import datetime, timedelta
@@ -81,6 +81,46 @@ def protected():
     current_user = get_jwt_identity()
     info_profile = User.query.filter_by(email=current_user).first()
     return jsonify({"user": info_profile.serialize()}), 200
+
+
+#endpoint para coger los mensajes de la gente que quiere contactarnos
+@api.route("/contactus", methods=["POST"])
+def contact():
+    print("HOLA")
+    request_body = request.json
+   
+    data = request.json
+    
+    email = data.get('email')
+    name = data.get('name')
+    message = data.get('message')
+
+     # Example validation
+    if not email or not name or not message:
+        return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
+ 
+    new_message = Contact(
+        message=message,
+        email=email,
+        name=name
+       
+        )
+    
+
+    print(new_message)
+    # Le decimos que lo agregue y que lo comitee 
+    db.session.add(new_message)
+    db.session.commit()
+
+    # generamos el token de este usuario
+    access_token = create_access_token(identity=new_message.email)
+
+    response_body = {
+        "msg": "the message has been sent",
+        "access_token": access_token
+        }
+    
+    return jsonify(response_body), 200
 
 
 #endpoint para que aparezcan las clases
@@ -162,6 +202,108 @@ def get_yogatype():
     return jsonify(response_body), 200
 
 
+#Endpoint para que aparezca un typo de yoga con su id yoga especifico
+@api.route('/<string:yogatype>/<int:yogatype_id>', methods=['GET'])
+# Si devuelve ok aparecerá en la consola de vscode el numero de id.
+def get_one_yoga_session(yogatype, yogatype_id):
+    if (yogatype == 'jivamuktiyoga'):
+        jivamukti_query = Jivamukti_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+    
+        if jivamukti_query is None:
+            return jsonify({
+                "msg": "Jivamukti session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'vinyasayoga'):
+        vinyasa_query = Vinyasa_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        if vinyasa_query is None:
+            return jsonify({
+                "msg": "vinyasa session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'rocketyoga'):
+        rocket_query = Rocket_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if rocket_query is None:
+            return jsonify({
+                "msg": "rocket session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "rocket_session": rocket_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
+    elif (yogatype == 'ashtangayoga'):
+        ashtanga_query = Ashtanga_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if ashtanga_query is None:
+            return jsonify({
+                "msg": "ashtanga session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "ashtanga_session": ashtanga_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
+    elif (yogatype == 'hathagayoga'):
+        hatha_query = Hatha_yoga.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if hatha_query is None:
+            return jsonify({
+                "msg": "hatha session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "hatha_session": hatha_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'meditation'):
+        meditation_query = Meditation.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if meditation_query is None:
+            return jsonify({
+                "msg": "meditation session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "meditation_session": meditation_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200
+    
+    elif (yogatype == 'harmonium'):
+        harmonium_query = Harmonium.query.filter_by(id = yogatype_id).first() #El filter sera con el id, no se podrá repetir
+        # Te lo devuelve en crudo.
+        if harmonium_query is None:
+            return jsonify({
+                "msg": "harmonium session not found"
+            }), 404
+        
+        response_body = {
+            "msg": "ok",
+            "harmonium_session": harmonium_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
+        }
+        return jsonify(response_body), 200 
+
 #endpoint the teachers
 @api.route('/theteachers', methods=['GET'])
 def get_theteachers():
@@ -179,6 +321,7 @@ def get_theteachers():
         "theteachers": theteachers_query
     }
     return jsonify(response_body), 200
+
 
 # @api.route('/jivamuktiyoga', methods=['GET'])
 # def get_jivamukti():    

@@ -8,15 +8,22 @@ import { Demo } from "./pages/demo";
 import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
 import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
+import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
+import { Signup } from "./pages/signup";
+
+import { AboutUs } from "./pages/aboutus";
+import { ContactUs } from "./pages/contactus";
+import { ThankYou } from "./pages/thankyou";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Testimonials } from "./component/testimonials.js";
 // import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
+import { SignupFreeTrial } from "./pages/signupfreetrial";
 
 //create your first component
 const Layout = () => {
@@ -41,8 +48,15 @@ const Layout = () => {
                         <Route path="/testimonials" element={<Testimonials />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
-                        <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} />
-                        <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} />
+                        <Route path="/aboutus" element={<AboutUs />} />
+                        <Route path="/contactus" element={<ContactUs />} />
+                        <Route path="/thankyou" element={<ThankYou />} />
+                        {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
+                        {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
+                        <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/signup/freetrial" element={<SignupFreeTrial />} />
+
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
