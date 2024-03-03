@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../img/logoOCEANOM.png" 
+import logo from "../../img/logoOCEANOM.png"
 // import { Login } from "../pages/login";
 
 export const Navbar = () => {
 
-	let location = useLocation();
-	console.log(location.pathname)
-	
-	return (
-		//<nav className="navbar p-0">
-		<>
+    let location = useLocation();
+    const [isLoggedIn, setIsLoggedIn] = useState(false); //creamos estado para ver si el usuario esta logeado
+    // console.log(location.pathname)
+
+    return (
+        //<nav className="navbar p-0">
+        <>
             {location.pathname !== "/" && (
                 <nav
                     id="navbar"
@@ -23,27 +24,60 @@ export const Navbar = () => {
                         <div className="ml-auto me-0">
                             <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-start">
                                 <li className="nav-item">
-                                    <Link to="/contactus">
+                                    <Link to="/sessions">
                                         <span className="nav-link active text-light" aria-current="page">
-                                            Contact Us
+                                            Sessions
                                         </span>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-									<Link to="/theteachers">
-                                    <span className="nav-link text-light">The Teachers</span>
-									</Link>
+                                    <Link to="/theteachers">
+                                        <span className="nav-link text-light">The Teachers</span>
+                                    </Link>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link to="/">
                                     <span className="nav-link text-light">Log In</span>
                                     </Link>
-                                </li>
+                                </li> */}
+                                {!isLoggedIn ? (
+                                    // añadimos <> para poder meter los dos li sin necesidad de añadir un div
+                                        <>
+                                        <li className="nav-item">
+                                            <Link to="/signup">
+                                                <span className="nav-link text-light">Signup</span>
+                                            </Link>
+                                        </li>
+                                    
+                                        <li className="nav-item">
+                                            <Link to="/signup/freetrial">
+                                                <span className="nav-link text-light">Free trial</span>
+                                            </Link>
+                                        </li>
+                                        </>
+                                ) : (null)}
+                                {isLoggedIn ? (
+                                    // Si el usuario está logeado, mostrar opciones específicas
+                                    <li className="nav-item">
+                                        <Link to="/dashboard">
+                                            {/* <span className="nav-link text-light">Dashboard</span> */}
+                                            <i className="fa-regular fa-user"></i>
+                                        </Link>
+                                    </li>
+                                ) : (
+                                    // Si el usuario no está logeado, mostrar opciones de inicio de sesión
+                                    <li className="nav-item">
+                                        <Link to="/login">
+                                            <span className="nav-link text-light">Login</span>
+                                        </Link>
+                                    </li>
+                                )}
+
                             </ul>
                         </div>
                     </div>
                 </nav>
             )}
         </>
-	);
+    );
 };

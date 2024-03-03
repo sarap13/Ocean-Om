@@ -116,10 +116,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -157,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllSessions: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/yogatype");
-					console.log(response.status);
+					// console.log(response.status);
 					if (response.status === 200) {
 						const data = await response.json();
 						console.log(data);

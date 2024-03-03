@@ -408,7 +408,6 @@ def signup():
     last_name = data.get('last_name')
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
-    role = data.get('role')
     subscription_start_date = datetime.today() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
     plan = data.get('plan')
     last_payment_date = ''
@@ -417,7 +416,7 @@ def signup():
 
 
     # Example validation
-    if not email or not password or not name or not last_name or not date_of_birth or not role:
+    if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
     if plan == "Free Trial":
@@ -432,7 +431,6 @@ def signup():
         password=password, 
         email=email, 
         date_of_birth=date_of_birth, 
-        role=role,
         subscription_start_date=subscription_start_date,
         next_payment_date=next_payment_date,
         last_payment_date=last_payment_date,
@@ -468,7 +466,6 @@ def signup_free_trial():
     last_name = data.get('last_name')
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
-    role = data.get('role')
     subscription_start_date = datetime.today() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
     subscription = Subscription.query.filter_by(plan='Free Trial').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
@@ -476,7 +473,7 @@ def signup_free_trial():
     is_subscription_active = True
 
     # Example validation
-    if not email or not password or not name or not last_name or not date_of_birth or not role:
+    if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
     # if subscription == 'Free Trial':
@@ -489,7 +486,6 @@ def signup_free_trial():
         password=password, 
         email=email, 
         date_of_birth=date_of_birth, 
-        role=role,
         subscription_start_date=subscription_start_date,
         subscription=subscription,
         next_payment_date=next_payment_date,
