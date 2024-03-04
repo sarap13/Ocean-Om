@@ -18,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
-			contactus: {}
+			contactus: {},
 
 			// demo: [
 			// 	{

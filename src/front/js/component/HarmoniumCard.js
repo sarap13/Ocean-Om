@@ -36,6 +36,10 @@ export const HarmoniumCard = (props) => {
 				<span className="card-title"><strong>Teacher:</strong> {props.instructor}</span><br></br></>
         		)}
 				<span className="card-title"><strong>Duration:</strong> {props.duration}</span>
+				<br></br>
+				<Link to={`/${props.type}/${props.id}`}>
+					<button className="btn btn-outline-primary btn-sm mt-2">See details</button>
+				</Link>
 				{/* <span className="card-title">{props.level}</span> */}
 			</div>
 
@@ -57,7 +61,8 @@ HarmoniumCard.propTypes = {
 	instructor: PropTypes.string,
 	duration: PropTypes.string,
 	subtitle: PropTypes.string,
-	url_imagen: PropTypes.string
+	url_imagen: PropTypes.string,
+	type: PropTypes.string
 };
 
 /**

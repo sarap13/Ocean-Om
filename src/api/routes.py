@@ -46,24 +46,6 @@ def login():
 
 # verificar el tiempo que ha pasado para cobrar a la persona
 
-#endpoint para traer a los usuarios
-# @api.route('/user', methods=['GET'])
-# def get_users():    
-#     user_query = User.query.all()
-#     user_query = list(map(lambda item: item.serialize(), user_query))
-#     # print(user_query)    
-#     if user_query == []:
-#         return jsonify({
-#              "Msg": "No hay usuarios registrados"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "user": user_query    }    
-        
-#     return jsonify(response_body), 200
-    # Create a route to authenticate your users and return JWTs. The
-    # create_access_token() function is used to actually generate the JWT.
 
 #api para traer un usuario en concreto
 @api.route('/user', methods=['GET'])
@@ -86,8 +68,6 @@ def get_one_user():
     return jsonify(response_body), 200
 
 
-
-
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
 
@@ -106,7 +86,6 @@ def protected():
 def contact():
     print("HOLA")
     request_body = request.json
-   
     data = request.json
     
     email = data.get('email')
@@ -121,9 +100,7 @@ def contact():
         message=message,
         email=email,
         name=name
-       
         )
-    
 
     print(new_message)
     # Le decimos que lo agregue y que lo comitee 
@@ -432,17 +409,12 @@ def signup():
     next_payment_date = ''
     is_subscription_active = True
 
-
     # Example validation
-    if not email or not password or not name or not last_name or not date_of_birth:
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-    # if plan == "Free Trial":
-        # next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
-    else:
-        last_payment_date = subscription_start_date
-        next_payment_date = last_payment_date + timedelta(days=30)
+    last_payment_date = subscription_start_date
+    next_payment_date = last_payment_date + timedelta(days=30)
 
     new_user = User(
         name=name, 
@@ -456,8 +428,7 @@ def signup():
         is_subscription_active=is_subscription_active
         )
     
-
-    print(new_user)
+    # print(new_user)
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
@@ -492,7 +463,6 @@ def signup_free_trial():
     is_subscription_active = True
 
     # Example validation
-    if not email or not password or not name or not last_name or not date_of_birth:
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
