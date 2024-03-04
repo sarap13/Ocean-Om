@@ -30,19 +30,20 @@ export const Navbar = () => {
                         {/* dropdown para dispositivos moviles, menu responsive */}
 
                         <div className="ml-auto me-0">
-                            <div className="d-flex justify-content-end d-sm-flex d-md-none gap-3">
+                            <div className="d-flex justify-content-end d-sm-flex d-md-none gap-3" id="navbarNav">
                                 <div className="dropdown">
                                     <button className="btn text-light btn-lg dropdown-toggle" type="button" id="mobiledropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby="mobiledropdownMenuButton">
                                         <Link to="/sessions" className="dropdown-item">Sessions</Link>
                                         <Link to="/theteachers" className="dropdown-item">The Teachers</Link>
+                                        <Link to="/signup/freetrial" className="dropdown-item">Free trial</Link>
                                         <Link to="/signup" className="dropdown-item">Signup</Link>
                                         <Link to="/login" className="dropdown-item">Login</Link>
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div className="collapse navbar-collapse">
                                 <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-start">
                                     <li className="nav-item">
                                         <Link to="/sessions">
