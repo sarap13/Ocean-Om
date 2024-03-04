@@ -70,12 +70,12 @@ export const Home = () => {
 				</div>
 
 				<div className="d-block ms-4 text-start col-lg-12 col-md-6 col-sm-6">
-					<span className="text-light fs-5 text-center mt-3">
-						Come and practice in this ocean of online yoga <br></br> classes.
+					<span className="text-light fs-5 text-center mt-1">
+						Come and practice in this ocean of online yoga <br></br> classes. 
 						With teachers from all over the globe!
 						<br></br>
 				
-						Enjoy exclusive content of yoga, meditation, and harmonium practices. <br></br>
+						Enjoy exclusive content of yoga, meditation, <br></br> and harmonium practices. 
 						Any style, at any time.
 					</span>
 					<div className="d-flex align-items-center justify-content-start mt-5">
