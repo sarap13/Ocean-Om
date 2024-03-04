@@ -19,7 +19,7 @@ export const SessionYogaDetailsCard = props => {
     // console.log(params)
 
     const [styleStartNow, setStyleStartNow] = useState("btn-light");
-    const isLoggedIn = store.loggedUSer !== null; //creamos const para saber si el user esta logeado
+    const isLoggedIn = store.loggedUser !== null; //creamos const para saber si el user esta logeado
 
 
     // boton Dive into the lesson now! que cuando haya hover se ponga el texto blanco
@@ -33,7 +33,7 @@ export const SessionYogaDetailsCard = props => {
 
     // funcion para cuando le demos click al botón dive to the session nos reenvie a youtube!
     const handleClickButton = () => {
-            isLoggedIn ? window.location.href = props.link : toast.error("You need to be subscribed to acces to this content");
+        isLoggedIn ? window.location.href = props.link : toast.error("You need to be subscribed to acces to this content");
 
     }
     console.log(props.name)
