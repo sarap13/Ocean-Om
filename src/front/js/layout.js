@@ -17,6 +17,8 @@ import { Signup } from "./pages/signup";
 import { AboutUs } from "./pages/aboutus";
 import { ContactUs } from "./pages/contactus";
 import { ThankYou } from "./pages/thankyou";
+import { ForgotPass } from "./pages/forgotpass";
+import { CheckInbox } from "./pages/checkyourinbox.js";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
@@ -56,6 +58,8 @@ const Layout = () => {
                         <Route path="/aboutus" element={<AboutUs />} />
                         <Route path="/contactus" element={<ContactUs />} />
                         <Route path="/thankyou" element={<ThankYou />} />
+                        <Route path="/forgotpass" element={<ForgotPass />} />
+                        <Route path="/checkyourinbox" element={<CheckInbox />} />
                         {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
                         {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
                         <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
