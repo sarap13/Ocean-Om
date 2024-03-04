@@ -17,6 +17,7 @@ export const SessionYogaDetailsCard = props => {
     // console.log(params)
 
     const [styleStartNow, setStyleStartNow] = useState("btn-light");
+
     // boton Dive into the lesson now! que cuando haya hover se ponga el texto blanco
     const handleHoverInButton = () => {
         setStyleStartNow("btn-outline-white text-dark");
@@ -26,6 +27,10 @@ export const SessionYogaDetailsCard = props => {
         setStyleStartNow("btn-light");
     };
 
+    // funcion para cuando le demos click al botón dive to the session nos reenvie a youtube!
+    const handleClickButton = () => {
+        window.location.href = props.link;
+    }
     console.log(props.name)
 
     return (
@@ -59,13 +64,13 @@ export const SessionYogaDetailsCard = props => {
                         <h6 className="ms-2">{props.level}</h6>
                     </div>
                     <div className="d-flex flex-row gap-5">
-                        <button type="button" className={`Name="btn btn-sm p-1 mt-4 btn-outline-ligth bg-transparent border-none d-flex align-items-start `} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
-                            <Link className={`btn text-dark `} to="/">
+                        <button type="button" onClick={handleClickButton} className={`Name="btn btn-sm p-3 mt-4 btn-outline-ligth bg-transparent border-none d-flex align-items-start`} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
+                            {/* <Link className={`btn  `} to={"/"}> */}
                                 Dive into the lesson now!
-                            </Link>
+                            {/* </Link> */}
                         </button>
                         <button type="button" className={`Name="btn btn-sm p-1 mt-4 btn-outline-light border-none bg-transparent d-flex align-items-start `} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
-                            <Link className={`btn text-dark `} to="/jivamutki">
+                            <Link className={`btn text-dark `} to="/sessions">
                                 Back
                             </Link>
                         </button>
