@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Context } from "../store/appContext";
 import logo from "../../img/logoOCEANOM.png"
 // import { Login } from "../pages/login";
 
 export const Navbar = () => {
 
+	const { store, actions } = useContext(Context)
     let location = useLocation();
-    const [isLoggedIn, setIsLoggedIn] = useState(false); //creamos estado para ver si el usuario esta logeado
-    // console.log(location.pathname)
+
+    const isLoggedIn = store.loggedUSer !== null; //creamos const para saber si el user esta logeado
 
     return (
         //<nav className="navbar p-0">
@@ -40,6 +42,7 @@ export const Navbar = () => {
                                     <span className="nav-link text-light">Log In</span>
                                     </Link>
                                 </li> */}
+                                {/* Si el usuario no esta logeado, aparecerán estos links */}
                                 {!isLoggedIn ? (
                                     // añadimos <> para poder meter los dos li sin necesidad de añadir un div
                                         <>
