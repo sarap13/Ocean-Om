@@ -81,7 +81,7 @@ export const Navbar = () => {
                                             </button>
                                             <div className="dropdown-menu bg-light opacity-75" aria-labelledby="dropdownMenuButton">
                                                 <Link to="/profile" className="dropdown-item">Your profile</Link>
-                                                <Link to="/signup/freetrial" className="dropdown-item">Logout</Link>
+                                                <Link to="/" className="dropdown-item" onClick={actions.logout}>Logout</Link>
                                             </div>
                                         </div>
                                     ) : (

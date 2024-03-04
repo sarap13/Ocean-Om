@@ -313,6 +313,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			logout: () => {
+				// console.log("Logging out...");
+                localStorage.removeItem("token"); // Elimina el token del almacenamiento local
+                localStorage.removeItem("user"); // Elimina los datos de usuario del almacenamiento local
+                setStore({ loggedUser: null }); // Actualiza el estado indicando que no hay un usuario autenticado
+            },
 
 
 		}
