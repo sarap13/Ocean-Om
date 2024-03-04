@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 export const Testimonials = () => {
+    const [title,setTitle ]= useState ("")
+    const [description, setDescription ]= useState ("")
     const navigate = useNavigate();
     const [state, setState] = useState({
         //initialize state here
@@ -10,14 +12,28 @@ export const Testimonials = () => {
     const { store, actions } = useContext(Context)
     async function handleTestimonials(e) {
         e.preventDefault()
-        if (logged) {
-            navigate("/sessions")
-        } else {
-            toast.error("Invalid ");
+        let fechaActual = new Date();
+        const fechaActualString = fechaActual.toISOString();
+        console.log(fechaActualString);
+
+        let testimonial = {
+            title: title,
+            description: description,
+            date: fechaActualString
         }
+        const option = {
+            method : "POST",
+            body : JSON.stringify(testimonial),
+            headers: {
+                "Content-Type":"application/json",
+                "Authorization":"Bearer " + localStorage.getItem("token")
+            }
+        } 
+
     }
+
     return (
-        <div className="container mt-5 m-auto opacity-50 h-100 row justify-content-md-center">
+        <div className="container mt-5 m-auto opacity-50 h-100 row justify-content-md-center" >
             <div className="text-center">
                 <h1>Testimonials</h1>
             </div>
@@ -33,17 +49,15 @@ export const Testimonials = () => {
             <div>
                 <div className="mt-3 text-center">
                     <h1>We would love to be of benefit for you</h1>
-                    <p>If yu like, you can rate us and give us your feedback</p>
+                    <p>If you like, you can rate us and give us your feedback</p>
                 </div>
-                <div className="d-flex  mt-5 row text-center justify-content-center">
+                <div className="d-flex mt-5 row text-center justify-content-center" onSubmit={handleTestimonials} >
                     <div className="mb-3 col col-lg-4">
-                        <label for="exampleFormControlTextarea1" className="form-label"></label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Testimonials" rows="3"></textarea>
+                        <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Testimonials" rows="3" onChange={(e)=> setDescription(e.target.value)}></textarea>
                     </div>
                     <div className="mb-3 col col-lg-3 justify-content-center">
-                        <label for="exampleFormControlInput1" className="form-label"></label>
-                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
-                        <button type="submit" className="btn btn-outline-secondary w-50 mt-5">send</button>
+                        <input type="title" className="form-control" id="exampleFormControlInput1" placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+                        <button type="submit" className="btn btn-outline-secondary w-50 mt-5" onClick={handleTestimonials}>Send</button>
                     </div>
                 </div>
             </div>
