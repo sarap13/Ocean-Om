@@ -6,6 +6,7 @@ from api.models import db, User, Subscription, Testimony, Contact, Session, Inst
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
+from stripe.error import InvalidRequestError
 # instalar pipenv stripe
 import stripe
 import json
@@ -470,7 +471,6 @@ def signup_free_trial():
     # if subscription == 'Free Trial':
     next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
     
-
     new_user = User(
         name=name, 
         last_name=last_name, 
@@ -488,14 +488,31 @@ def signup_free_trial():
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
-
-    # generamos el token de este usuario
-    access_token = create_access_token(identity=new_user.name)
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
+                    'quantity': 1,
+                },
+            ],
+            return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return" + '/return?session_id={CHECKOUT_SESSION_ID}',
+            # return_url = "https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return/return?session_id={}".format(session.id),
+        )
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
     response_body = {
         "msg": "the user has been created with the Free Trial plan",
-        "access_token": access_token
+        "session_id" : session.id,
+        "clientSecret" : session.client_secret,
+        "user" : new_user.serialize()
         }
+    
     return jsonify(response_body), 200
 
 
@@ -540,85 +557,36 @@ def logout():
 
 # hay que importar stripe!!!!
 # arriba se pone la clave de stripe
-#endpoint para desuscribirse
-@api.route("/checkout", methods=["POST"])
-# @jwt_required()
-def processing_payment():
+# @api.route("/checkout", methods=["POST"])
+# # @jwt_required()
+# def processing_checkout_payment():
+#     try:
+#         session = stripe.checkout.Session.create(
+#             mode="subscription",
+#             ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+#             line_items=[
+#                 {
+#                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+#                     # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+#                     'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
+#                     'quantity': 1,
+#                 },
+#             ],
+#             return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return" + '/return?session_id={CHECKOUT_SESSION_ID}',
+#         )
+#     except Exception as e:
+#         return jsonify(error=str(e)), 500
+
+#     return jsonify(session_id=session.id, clientSecret=session.client_secret)
+
+# para comprobar el estado de la sessioncheckout
+@api.route('/session-status', methods=['GET'])
+def session_status():
+    session_id = request.args.get('session_id')
+    print(session_id)
     try:
-        data = json.loads(request.data)
-        # Create a PaymentIntent with the order amount and currency
-        intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            currency='eur',
-            # In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-            automatic_payment_methods={
-                'enabled': True,
-            },
-        )
-        return jsonify({
-            'clientSecret': intent['client_secret']
-        })
-    except Exception as e:
-        return jsonify(error=str(e)), 403
+        session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+        return jsonify(status=session.status, customer_email=session.customer_details.email)
+    except InvalidRequestError as e:
+        return jsonify(error=str(e)), 400
 
-
-
-        print (data)
-        # Obtienes el id del usuario por el token
-        current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
-
-        # si no está en usuario
-        if not user:
-            return jsonify({"msg": "User not found"}), 404
-        
-        # Crea una sesión de checkout para la suscripción
-        # checkout_session = stripe.checkout.Session.create(
-        #     payment_method_types=['card'],
-        #     line_items=[{
-        #         'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
-        #         'quantity': 1,
-        #     }],
-        #     mode='subscription',
-        #     success_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
-        #     cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html',
-        #     customer=user.stripe_customer_id,  # ID del cliente de Stripe
-        # )
-
-        # # Devuelve una respuesta exitosa si todo está bien
-        # return jsonify({"message": "Payment processed successfully"}), 200
-
-    # except error.StripeError as e:
-    #     return jsonify({"error": str(e)}), 500
-    # # # llamamos a lo que nos envian
-    # request_body = request.json
-    # data = request_body
-
-    # id = data.get('id')
-    # amount = data.get('amount')
-    # print(data)
-    # print(request_body)
-    # response_body = {
-    #     "msg": "the payment has been proceed",
-    #     "access_token": access_token
-    #     }
-    
-
-    # checkout_register_session = stripe.checkout.create(
-    #     subscription = {
-    #         'price': "price_1OpFEfIidK9VIejHfobZkWvI",
-    #         'quantity': 1
-    #     },
-    #     mode="subscription",
-    #     succes_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
-    #     cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html'
-    # )
-    # return redirect(checkout_register_session.url, code=303)
-
-        # charge = stripe.Charge.create(
-        #     amount=1000,  # Monto en centavos (por ejemplo, $10.00)
-        #     currency='usd',
-        #     source=token,  # Token de pago generado por Stripe Elements
-        #     description='Pago mensual de suscripción'
-        # )
-    

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PaymentElement } from '@stripe/react-stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -19,7 +20,8 @@ import {
 const stripePromise = loadStripe("pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc")
 
 
-export function PaymentCheckout() {
+
+export function Return() {
     // se crea un usestate del estado y del cliente 
     const [status, setStatus] = useState(null);
     const [customerEmail, setCustomerEmail] = useState('');
@@ -29,9 +31,10 @@ export function PaymentCheckout() {
         const urlParams = new URLSearchParams(queryString);
         const sessionId = urlParams.get('session_id');
 
-        fetch(`/session-status?session_id=${sessionId}`)
+        fetch(`https://organic-acorn-5g4grq55vjjf4q6j-3001.app.github.dev/api/session-status?session_id=${sessionId}`)
             .then((res) => res.json())
             .then((data) => {
+                console.log(data)
                 setStatus(data.status);
                 setCustomerEmail(data.customer_email);
             });

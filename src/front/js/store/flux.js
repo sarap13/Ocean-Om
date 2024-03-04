@@ -19,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			teachers: [],
 			singleYogaSessionInfo: {},
 			contactus: {},
+			payment: {},
 
 			// demo: [
 			// 	{
@@ -128,8 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			signupFree: async (name, lastname, date_of_birth, email, password, confirmPassword) => {
-				// console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-				console.log("funciona")
+				// console.log("funciona")
 				try {
 					let response = await fetch(process.env.BACKEND_URL + "/api/signup/freetrial", {
 						method: "POST",
@@ -143,15 +143,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"name": name,
 							"last_name": lastname,
 							"date_of_birth": date_of_birth,
-							"role": "Student"
 						})
 					})
 					let data = await response.json()
+					console.log(data);
+
 					if (response.status === 401) {
 						return false;
 					}
-					localStorage.setItem("token", data.access_token)
-					// console.log(data);
+					// setStore({payment : {clientSecret: data.clientSecret, session_id : data.session_id}})
+					localStorage.setItem("payment", JSON.stringify({clientSecret: data.clientSecret, session_id : data.session_id}))
 					return true
 				} catch (error) {
 					// console.log(error);

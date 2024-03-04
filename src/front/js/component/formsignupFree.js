@@ -1,11 +1,14 @@
-import React, { useContext, useState, } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/signup.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const FormSignupFreeTrial = ({ freeTrial }) => {
+
+    // const { store, actions } = useContext(Context);
+
     const navigate = useNavigate();
     const [state, setState] = useState({
         //initialize state here
@@ -20,19 +23,20 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
     const { store, actions } = useContext(Context)
 
     async function handleFormSignupFreeTrial(e) {
+        // actions.signupFree();
         e.preventDefault()
         let logged = ""
-        console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-        if (freeTrial) {
-            logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
-        } else {
-            logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        }
-        console.log(logged)
+        // console.log(name, lastname, date_of_birth, email, password, confirmPassword);
+        // if (freeTrial) {
+        logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
+        // } else {
+        //     logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
+        // }
+        // console.log(logged)
         if (logged) {
-            navigate("/sessions")
+            navigate("/paymentdetails")
         } else {
-            toast.error("Invalid email or password");
+            toast.error("Error while creating the account");
         }
     }
 
@@ -68,7 +72,9 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                             <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
                             <label htmlFor="exampleInputConfirmPassword1" className="form-label mt-3">Again, just in case</label>
                             <input type="password" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
-                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5">Sign Up</button>
+                            {/* <Link to="/paymentdetails"> */}
+                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5" onClick={handleFormSignupFreeTrial}>Sign Up</button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>
