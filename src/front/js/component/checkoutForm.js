@@ -36,10 +36,10 @@ const CheckoutForm = () => {
             navigate("/signup/freetrial");
         }
 
-        return {
-            // Código de limpieza (si es necesario)
-        };
-    }, [navigate]);
+        // return {
+        //     // Código de limpieza (si es necesario)
+        // };
+    }, []);
 
 
 
