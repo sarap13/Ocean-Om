@@ -2,8 +2,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 // 1. importamos lo necesario para usar stripe (plataforma de pago)
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js"; //engloba a otros componentes para que tengan acceso a stripe
+// import { loadStripe } from "@stripe/stripe-js";
+// import { Elements } from "@stripe/react-stripe-js"; //engloba a otros componentes para que tengan acceso a stripe
 
 //include your index.scss file into the bundle
 import "../styles/index.css";

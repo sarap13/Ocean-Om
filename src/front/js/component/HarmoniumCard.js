@@ -17,25 +17,29 @@ export const HarmoniumCard = (props) => {
 
 	return (
 		<div className="card mx-0 pl-0" style={{ width: "18rem", height: "25rem" }}>
-			
-				<img src={props.url_imagen} id="styleImageCard" className="card-img-top" alt="..." />
-			
+
+			<img src={props.url_imagen} id="styleImageCard" className="card-img-top" alt="..." />
+
 			<div className="card-body">
 				<h5 className="card-title">{props.name}</h5>
 				<span className="card-title"><strong>Subtitle:</strong>  {props.subtitle}</span><br></br>
-				 {/* Verifica si "props.instructor" es un objeto */}
-				 {typeof props.instructor === 'object' ? (
-          	<div>
-            	<span className="card-title"><strong>Teacher:</strong> {props.instructor.name}</span><br></br>
-            	{/* Puedes agregar más detalles del instructor si es necesario */}
-          	</div>
-        	) : (
-          	// Si no es un objeto, simplemente muestra el valor
-          	<>
-				{/* // Si no es un objeto, simplemente muestra el valor */}
-				<span className="card-title"><strong>Teacher:</strong> {props.instructor}</span><br></br></>
-        		)}
+				{/* Verifica si "props.instructor" es un objeto */}
+				{typeof props.instructor === 'object' ? (
+					<div>
+						<span className="card-title"><strong>Teacher:</strong> {props.instructor.name}</span><br></br>
+						{/* Puedes agregar más detalles del instructor si es necesario */}
+					</div>
+				) : (
+					// Si no es un objeto, simplemente muestra el valor
+					<>
+						{/* // Si no es un objeto, simplemente muestra el valor */}
+						<span className="card-title"><strong>Teacher:</strong> {props.instructor}</span><br></br></>
+				)}
 				<span className="card-title"><strong>Duration:</strong> {props.duration}</span>
+				<br></br>
+				<Link to={`/${props.type}/${props.id}`}>
+					<button className="btn btn-outline-primary btn-sm mt-2">See details</button>
+				</Link>
 				{/* <span className="card-title">{props.level}</span> */}
 			</div>
 
@@ -57,7 +61,8 @@ HarmoniumCard.propTypes = {
 	instructor: PropTypes.string,
 	duration: PropTypes.string,
 	subtitle: PropTypes.string,
-	url_imagen: PropTypes.string
+	url_imagen: PropTypes.string,
+	type: PropTypes.string
 };
 
 /**

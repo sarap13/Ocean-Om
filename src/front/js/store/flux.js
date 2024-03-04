@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			user: [],
-			loggedUSer: null,
+			loggedUser: null,
 			jivamuktiYoga: [],
 			jivamuktiSessionInfo: {},
 			vinyasaYoga: [],
@@ -18,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
-			contactus: {}
+			contactus: {},
 
 			// demo: [
 			// 	{
@@ -87,11 +87,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 					localStorage.setItem("token", data.access_token)
 					localStorage.setItem("user", JSON.stringify(data.user)) //para convertir los datos en string
-					setStore({ loggedUSer: data })
-					console.log(data);
+					setStore({ loggedUser: data })
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -120,10 +120,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -151,10 +151,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -245,7 +245,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllTeachers: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/theteachers");
-					console.log(response.status);
+					// console.log(response.status);
 
 					if (response.status === 200) {
 						const data = await response.json();
@@ -313,6 +313,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			logout: () => {
+				// console.log("Logging out...");
+                localStorage.removeItem("token"); // Elimina el token del almacenamiento local
+                localStorage.removeItem("user"); // Elimina los datos de usuario del almacenamiento local
+                setStore({ loggedUser: null }); // Actualiza el estado indicando que no hay un usuario autenticado
+				console.log(store.loggedUser)
+            },
 
 
 		}

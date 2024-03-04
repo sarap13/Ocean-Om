@@ -28,7 +28,7 @@ export const Teachers = () => {
 	return (
    
 
-		<div className="container-fluid mt-5 pt-5 text-center">
+		<div className="container-fluid mt-2 pt-5 text-center">
 		<div className="d-flex justify-content-center mt-5 pt-5">   
 			<h1 className="poiret-one-regular">The Teachers</h1>
 		</div> 

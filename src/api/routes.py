@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Subscription, Testimony, Contact, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
 # instalar pipenv stripe
 import stripe
@@ -46,24 +46,6 @@ def login():
 
 # verificar el tiempo que ha pasado para cobrar a la persona
 
-#endpoint para traer a los usuarios
-# @api.route('/user', methods=['GET'])
-# def get_users():    
-#     user_query = User.query.all()
-#     user_query = list(map(lambda item: item.serialize(), user_query))
-#     # print(user_query)    
-#     if user_query == []:
-#         return jsonify({
-#              "Msg": "No hay usuarios registrados"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "user": user_query    }    
-        
-#     return jsonify(response_body), 200
-    # Create a route to authenticate your users and return JWTs. The
-    # create_access_token() function is used to actually generate the JWT.
 
 #api para traer un usuario en concreto
 @api.route('/user', methods=['GET'])
@@ -86,8 +68,6 @@ def get_one_user():
     return jsonify(response_body), 200
 
 
-
-
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
 
@@ -106,7 +86,6 @@ def protected():
 def contact():
     print("HOLA")
     request_body = request.json
-   
     data = request.json
     
     email = data.get('email')
@@ -121,9 +100,7 @@ def contact():
         message=message,
         email=email,
         name=name
-       
         )
-    
 
     print(new_message)
     # Le decimos que lo agregue y que lo comitee 
@@ -143,6 +120,7 @@ def contact():
 
 #endpoint para que aparezcan las clases
 @api.route('/sessions', methods=['GET'])
+@jwt_required()
 def get_sessions():    
     session_query = Session.query.all()
     session_query = list(map(lambda item: item.serialize(), session_query))
@@ -432,16 +410,12 @@ def signup():
     next_payment_date = ''
     is_subscription_active = True
 
-
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-    # if plan == "Free Trial":
-        # next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
-    else:
-        last_payment_date = subscription_start_date
-        next_payment_date = last_payment_date + timedelta(days=30)
+    last_payment_date = subscription_start_date
+    next_payment_date = last_payment_date + timedelta(days=30)
 
     new_user = User(
         name=name, 
@@ -455,8 +429,7 @@ def signup():
         is_subscription_active=is_subscription_active
         )
     
-
-    print(new_user)
+    # print(new_user)
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
@@ -550,6 +523,18 @@ def unsubscribe():
         return jsonify({
             "msg": "User not found"
         }), 404
+
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    unset_jwt_cookies()
+    # para quitar las cookies y el token
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+
+    return jsonify({"msg": "Logout exitoso"}), 200
+
 
 
 
