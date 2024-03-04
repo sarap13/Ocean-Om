@@ -9,32 +9,19 @@ export const Navbar = () => {
     const { store, actions } = useContext(Context)
     let location = useLocation();
 
-    // const isLoggedIn = store.loggedUSer !== null; //creamos const para saber si el user esta logeado
-    const [isLoggedIn, setIsLoggedIn] = useState(store.loggedUSer !== null);
-
-    // el dropdown no se cierra automaticamente, usaremos useRef para cerrarlo forzado 
-    const dropdownRef = useRef(null);
-
-    useEffect(() => {
-        // Actualizar el estado de isLoggedIn después de cambios en el store
-        setIsLoggedIn(store.loggedUSer !== null);
-    }, [store.loggedUSer]);
+    const isLoggedIn = store.loggedUser !== null; //creamos const para saber si el user esta logeado
 
     const handleLogout = () => {
-       if (dropdownRef.current) {
-            // Cerrar el Dropdown manualmente
-            const dropdown = new window.bootstrap.Dropdown(dropdownRef.current);
-            dropdown.hide();
         actions.logout();
     };
-    }
+
     return (
         //<nav className="navbar p-0">
         <>
             {location.pathname !== "/" && (
                 <nav
                     id="navbar"
-                    className="navbar navbar-expand-lg navbar-dark fixed-top mb-2"
+                    className="navbar navbar-expand-lg navbar-dark fixed-top mb-2 z-n1"
                     style={{ backgroundColor: "#1D77AB" }}>
                     <div className="container mt-1 ms-2 col-lg-12 col-md-6 col-sm-6">
                         <Link to="/">
@@ -109,7 +96,6 @@ export const Navbar = () => {
                                             </Link>
                                         </li>
                                     )}
-
                                 </ul>
                             </div>
                         </div>
