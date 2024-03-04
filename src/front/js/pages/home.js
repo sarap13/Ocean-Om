@@ -45,18 +45,18 @@ export const Home = () => {
 				</div>
 				{/* Botones en línea para pantallas medianas y grandes */}
 				<div className="d-none d-sm-none d-md-flex justify-content-end gap-3">
-					<Link to="/signup">
+					{/* <Link to="/signup">
 						<button type="button" className="btn btn-outline-light btn-lg">Signup</button>
-					</Link>
+					</Link> */}
 					<Link to="/signup/freetrial">
-						<button type="button" className="btn btn-outline-light btn-lg">Freetrial</button>
+						<button type="button" className="btn btn-outline-light btn-lg">Free Trial</button>
 					</Link>
 					<Link to="/contactus">
 						<button type="button" className="btn btn-outline-light btn-lg p-2 mx-2">Contact Us</button>
 					</Link>
-					<Link to="/testimonials">
+					{/* <Link to="/testimonials">
 						<button type="button" className="btn btn-outline-light btn-lg p-2 mx-2">Testimonials</button>
-					</Link>
+					</Link> */}
 					<Link to="/login">
 						<button type="button" className="btn btn-outline-light btn-lg">Login</button>
 					</Link>
@@ -74,8 +74,7 @@ export const Home = () => {
 						Come and practice in this ocean of online yoga <br></br> classes.
 						With teachers from all over the globe!
 						<br></br>
-						<br></br>
-
+				
 						Enjoy exclusive content of yoga, meditation, and harmonium practices. <br></br>
 						Any style, at any time.
 					</span>
