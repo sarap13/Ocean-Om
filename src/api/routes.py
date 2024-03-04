@@ -120,6 +120,7 @@ def contact():
 
 #endpoint para que aparezcan las clases
 @api.route('/sessions', methods=['GET'])
+@jwt_required()
 def get_sessions():    
     session_query = Session.query.all()
     session_query = list(map(lambda item: item.serialize(), session_query))

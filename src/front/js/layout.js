@@ -1,36 +1,36 @@
-import React from "react";
+import React, { useContext, useEffect } from "react"; //importamos el use context y el effect para si el usuario esta loggeado mantenerlo 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
+import { Context } from "./store/appContext";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
-import { SingleJivamutkiYogaDetails } from "./pages/SingleJivamutkiYogaDetails.js";
-import { SingleVinyasaYogaDetails } from "./pages/SingleVinyasaYogaDetails.js";
 import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { UserProfile } from "./pages/userProfile";
-
-// import { CheckoutForm } from "./pages/login";
-
-import { PaymentCheckout } from "./pages/paymentcheckout.js"
+// import { PaymentCheckout } from "./pages/paymentcheckout.js"
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 import { Signup } from "./pages/signup";
-
 import { AboutUs } from "./pages/aboutus";
 import { ContactUs } from "./pages/contactus";
 import { ThankYou } from "./pages/thankyou";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-// import { HathaYogaDetailsCard } from "./component/HathaYogaDetailsCard.js";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
 
 //create your first component
 const Layout = () => {
+    // const { actions, store } = useContext(Context);
+    // Use efect para traer el token si esta logeado el usuario
+    // useEffect(() => {
+    //     const token = localStorage.getItem("token");
+    //     if (token) {
+    //         actions.loginWithToken(token);
+    //     }
+    // }, []);
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
@@ -38,7 +38,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div style={{backgroundColor: "#FBF9F1"}}>
+        <div style={{ backgroundColor: "#FBF9F1" }}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />

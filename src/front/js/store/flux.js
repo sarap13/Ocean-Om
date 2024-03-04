@@ -245,7 +245,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllTeachers: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/theteachers");
-					console.log(response.status);
+					// console.log(response.status);
 
 					if (response.status === 200) {
 						const data = await response.json();
