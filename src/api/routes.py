@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Subscription, Testimony, Contact, Session, Instructor, Types_of_session, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium, Jivamukti_yoga
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
 # instalar pipenv stripe
 import stripe
@@ -523,6 +523,18 @@ def unsubscribe():
         return jsonify({
             "msg": "User not found"
         }), 404
+
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    unset_jwt_cookies()
+    # para quitar las cookies y el token
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+
+    return jsonify({"msg": "Logout exitoso"}), 200
+
 
 
 

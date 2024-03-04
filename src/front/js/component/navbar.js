@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Context } from "../store/appContext";
 import logo from "../../img/logoOCEANOM.png"
@@ -9,8 +9,25 @@ export const Navbar = () => {
     const { store, actions } = useContext(Context)
     let location = useLocation();
 
-    const isLoggedIn = store.loggedUSer !== null; //creamos const para saber si el user esta logeado
+    // const isLoggedIn = store.loggedUSer !== null; //creamos const para saber si el user esta logeado
+    const [isLoggedIn, setIsLoggedIn] = useState(store.loggedUSer !== null);
 
+    // el dropdown no se cierra automaticamente, usaremos useRef para cerrarlo forzado 
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        // Actualizar el estado de isLoggedIn después de cambios en el store
+        setIsLoggedIn(store.loggedUSer !== null);
+    }, [store.loggedUSer]);
+
+    const handleLogout = () => {
+       if (dropdownRef.current) {
+            // Cerrar el Dropdown manualmente
+            const dropdown = new window.bootstrap.Dropdown(dropdownRef.current);
+            dropdown.hide();
+        actions.logout();
+    };
+    }
     return (
         //<nav className="navbar p-0">
         <>
@@ -81,7 +98,7 @@ export const Navbar = () => {
                                             </button>
                                             <div className="dropdown-menu bg-light opacity-75" aria-labelledby="dropdownMenuButton">
                                                 <Link to="/profile" className="dropdown-item">Your profile</Link>
-                                                <Link to="/" className="dropdown-item" onClick={actions.logout}>Logout</Link>
+                                                <Link to="/" className="dropdown-item" onClick={handleLogout}>Logout</Link>
                                             </div>
                                         </div>
                                     ) : (
