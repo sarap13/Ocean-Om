@@ -17,7 +17,7 @@ export const Navbar = () => {
             {location.pathname !== "/" && (
                 <nav
                     id="navbar"
-                    className="navbar navbar-expand-lg navbar-dark fixed-top"
+                    className="navbar navbar-expand-lg navbar-dark fixed-top mb-2"
                     style={{ backgroundColor: "#1D77AB" }}>
                     <div className="container mt-1 ms-2 col-lg-12 col-md-6 col-sm-6">
                         <Link to="/">
