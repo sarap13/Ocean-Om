@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
+import secrets
+import string
 
 from api.models import db, User, Subscription, Testimony, Session, Instructor, Types_of_session, Jivamukti_yoga, Vinyasa_yoga, Rocket_yoga, Ashtanga_yoga, Hatha_yoga, Meditation, Harmonium #importamos los modelos que usaremos
 from api.routes import api
@@ -91,20 +93,33 @@ def serve_any_other_file(path):
 
 #agregamos el mail de Flask para recuperar contraseña y contact us
 
+def generate_random_password(length=12):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(secrets.choice(characters) for _ in range(length))
+    return password
 
+# Ruta para restablecer la contraseña
+@app.route("/reset-password", methods=["PUT"])
+def reset_password():
+    data = request.json
+    user = db.session.query(User).filter(User.email == data.get("email")).first()
 
-#agregamos esta ruta para lo del Flask Mail
-#method put
-@app.route("/send")
-def send():
-    user = db.session.query(User).filter(User.email == request.json.get("email")).one()
-    
-    print("hola")
-    msg = Message(subject='Hello from the other side!', sender='jmailtrap@demomailtrap.com', recipients=['jacky.vivian.vargas@gmail.com'])
-    msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works"
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Generar una nueva contraseña
+    new_password = generate_random_password()
+
+    # Actualizar la contraseña en la base de datos
+    user.password = new_password
+    db.session.commit()
+
+    # Enviar la nueva contraseña por correo electrónico
+    msg = Message(subject='Password Reset', sender='jmailtrap@demomailtrap.com', recipients=[user.email])
+    msg.body = f'Your new password is: {new_password}'
     mail.send(msg)
-    
-    return "Message sent!"
+
+    return jsonify({"message": "Password reset successfully"}), 200
 
 
 

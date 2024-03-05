@@ -18,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
-			contactus: {},
+			contactus: {}
 
 			// demo: [
 			// 	{
@@ -320,6 +320,30 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ loggedUser: null }); // Actualiza el estado indicando que no hay un usuario autenticado
 				console.log(store.loggedUser)
             },
+			resetPassword: async (email) => {
+			
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/reset-password", {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ email }),
+					});
+	
+					if (response.ok) {
+						alert('Password reset successful. Check your email for the new password.');
+					} else {
+						const data = await response.json();
+						
+						alert(`Error: ${data.error}`);
+					}
+				} catch (error) {
+					console.error('Error:', error);
+					alert('An error occurred. Please try again later.');
+				}
+			
+            }
 
 
 		}

@@ -58,7 +58,7 @@ const Layout = () => {
                         <Route path="/aboutus" element={<AboutUs />} />
                         <Route path="/contactus" element={<ContactUs />} />
                         <Route path="/thankyou" element={<ThankYou />} />
-                        <Route path="/forgotpass" element={<ForgotPass />} />
+                        <Route path="/forgotpassword" element={<ForgotPass />} />
                         <Route path="/checkyourinbox" element={<CheckInbox />} />
                         {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
                         {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
