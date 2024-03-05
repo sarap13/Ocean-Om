@@ -452,6 +452,23 @@ def signup_free_trial():
     # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
     request_body = request.json
     
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
+                    'quantity': 1,
+                },
+            ],
+            return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+    
     data = request.json
     name = data.get('name')
     password = data.get('password')
@@ -488,23 +505,6 @@ def signup_free_trial():
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
-    try:
-        session = stripe.checkout.Session.create(
-            mode="subscription",
-            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
-                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
-                    'quantity': 1,
-                },
-            ],
-            return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return" + '/return?session_id={CHECKOUT_SESSION_ID}',
-            # return_url = "https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return/return?session_id={}".format(session.id),
-        )
-    except Exception as e:
-        return jsonify(error=str(e)), 500
 
     response_body = {
         "msg": "the user has been created with the Free Trial plan",
@@ -525,7 +525,7 @@ def unsubscribe():
 
     if user:
         if user.subscription_end_date is None: #si no hay fecha de subscripción, añade la actual
-            user.subscription_end_date = datetime.utcnow()
+            user.subscription_end_date = datetime.today().date()
             user.is_subscription_active = False
             db.session.commit()
             return jsonify({
@@ -553,40 +553,21 @@ def logout():
     return jsonify({"msg": "Logout exitoso"}), 200
 
 
-
-
-# hay que importar stripe!!!!
-# arriba se pone la clave de stripe
-# @api.route("/checkout", methods=["POST"])
-# # @jwt_required()
-# def processing_checkout_payment():
-#     try:
-#         session = stripe.checkout.Session.create(
-#             mode="subscription",
-#             ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
-#             line_items=[
-#                 {
-#                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-#                     # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
-#                     'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
-#                     'quantity': 1,
-#                 },
-#             ],
-#             return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev/return" + '/return?session_id={CHECKOUT_SESSION_ID}',
-#         )
-#     except Exception as e:
-#         return jsonify(error=str(e)), 500
-
-#     return jsonify(session_id=session.id, clientSecret=session.client_secret)
-
 # para comprobar el estado de la sessioncheckout
 @api.route('/session-status', methods=['GET'])
 def session_status():
     session_id = request.args.get('session_id')
     print(session_id)
+    if not session_id:
+        return jsonify(error='Session ID is required'), 400
     try:
-        session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
-        return jsonify(status=session.status, customer_email=session.customer_details.email)
-    except InvalidRequestError as e:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except stripe.error.InvalidRequestError as e:
         return jsonify(error=str(e)), 400
-
+    except stripe.error.StripeError as e:
+        return jsonify(error=str(e)), 500
+    
+    if not session:
+        return jsonify(error='Session not found'), 404
+    customer_email = session.customer_details.get('email', 'N/A')
+    return jsonify(status=session.status, customer_email=session.customer_details.email)
