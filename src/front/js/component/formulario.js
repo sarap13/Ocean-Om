@@ -57,7 +57,7 @@ export const Formulario = () => {
                     </div>
                     <div className="d-flex flex-column justify-content-center">
                         <p className=" fw-light mb-0 text-decoration-none"><Link to="/signup" className="link-secondary">Don't have an acount?</Link></p>
-                        <p className=" fw-light"><Link to="#" className="link-secondary fw-light mt-0">Forgot password?</Link></p>
+                        <p className=" fw-light"><Link to="/forgotpassword" className="link-secondary fw-light mt-0">Forgot password?</Link></p>
 
                     </div>
                 </div>

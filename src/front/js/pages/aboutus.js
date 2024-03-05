@@ -37,7 +37,7 @@ export const AboutUs = () => {
 		<div className="container-fluid d-block justify-content-center stylebackgroundsquare p-5">
             <img src={logo} className="ms-3" alt="..." style={{width: "50%"}}/>
 			<div className="mt-3">
-				<span className="text-white span">
+				<span className="text-white poiret-one-regular">
 					Ocean of Om is a worldwide Yoga Hub, which looks for create a yoga community that doesn't know about separation. That is unified by one unique ocean. We want to put down the walls between the sky and the sea, the students and the teachers, one country and another and between us and you. Our purpose is to create a place for you to practice with any teacher without the barriers of physical distance. Also, we want teachers to expand their spiritual teachings to the whole world. We know changing the globe can be a huge purpose, but at least we want to touch people's heart. Your heart.
 				</span>
 			</div>
