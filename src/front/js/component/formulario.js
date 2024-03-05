@@ -22,15 +22,18 @@ export const Formulario = () => {
 
     async function handleLogin(e) {
         e.preventDefault()
-        console.log(email, password);
+        // console.log(email, password);
         let logged = await actions.login(email, password);
-        console.log(logged)
-        if (logged) { //true
-            navigate("/");
-        } else {
+        // console.log(logged)
+        if (logged === true) { // ponemos === true porque tiene mas valores, si ponemos solo logged acepta los errores al existir
+            navigate("/sessions");
+        }
+        if (logged === 401) {
             toast.error("Invalid email or password");
         }
-        // if (email )
+        if (logged === 403) {
+            toast.error("User not subscribed");
+        }
     }
 
     return (
@@ -53,7 +56,7 @@ export const Formulario = () => {
                         <button type="submit" className="btn btn-outline-secondary w-50 mt-3">Login</button>
                     </div>
                     <div className="d-flex flex-column justify-content-center">
-                        <p className=" fw-light mb-0 text-decoration-none"><Link to="/singup" className="link-secondary">Don't have an acount?</Link></p>
+                        <p className=" fw-light mb-0 text-decoration-none"><Link to="/signup" className="link-secondary">Don't have an acount?</Link></p>
                         <p className=" fw-light"><Link to="#" className="link-secondary fw-light mt-0">Forgot password?</Link></p>
 
                     </div>
@@ -73,4 +76,3 @@ export const Formulario = () => {
         </>
     );
 };
-{/* <div src="https://www.sattology.com/wp-content/uploads/2020/06/simbolo-do-om-ornamental_1058-101.jpg"></div>  ((((esta es la foto de omkara que va en la derecha)))*/ }

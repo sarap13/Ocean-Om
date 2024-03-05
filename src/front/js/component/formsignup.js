@@ -26,7 +26,6 @@ export const FormSignup = ({ freeTrial }) => {
         if (freeTrial) {
             logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
         } else {
-
             logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
         }
         console.log(logged)
@@ -40,7 +39,7 @@ export const FormSignup = ({ freeTrial }) => {
     return (
         <>
             <ToastContainer />
-            <form className="stylebackgroundimg container d-flex mt-5 flex-column mb-5 opacity-50 ms-5 text-center " onSubmit={handleFormSignup}>
+            <form className="stylebackgroundimg container d-flex mt-5 flex-column mb-5 opacity-50 ms-5 text-center pt-5" onSubmit={handleFormSignup}>
                 <h1 className="poiret-one-regular fs-1">New Practitioner</h1>
                 <div className="row justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4 ">
@@ -75,7 +74,7 @@ export const FormSignup = ({ freeTrial }) => {
                 </div>
                 <div>
 
-                <h1 className="poiret-one-regular mt-5">Thank you a feel warmly welcomed</h1>
+                <h1 className="poiret-one-regular mt-3">Thank you a feel warmly welcomed</h1>
                 </div>
 
             </form>

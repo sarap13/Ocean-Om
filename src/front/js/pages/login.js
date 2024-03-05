@@ -9,7 +9,7 @@ export const Login = (email, password) => {
 
 	console.log(email, password);
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid mt-5 pt-5">
 			<Formulario />
 		</div>
 	);

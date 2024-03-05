@@ -26,7 +26,6 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         if (freeTrial) {
             logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
         } else {
-
             logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
         }
         console.log(logged)
@@ -40,7 +39,7 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
     return (
         <>
             <ToastContainer />
-            <form className="stylebackgroundimg container d-flex  mt-5 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+            <form className="stylebackgroundimg container d-flex  mt-3 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4">

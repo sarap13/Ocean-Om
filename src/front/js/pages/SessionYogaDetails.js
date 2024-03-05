@@ -18,9 +18,9 @@ export const SessionYogaDetails = () => {
 		// Envias a la función la parte que coge la url dinamica y se lo pasas al flux como parametro.
 
 	}, [])
-	console.log(store.singleYogaSessionInfo)
+
 	return (
-		<div className="jumbotron align-items-center container-fluid h-100 pb-5 pt-4 my-5">
+		<div className="jumbotron align-items-center container-fluid h-100 pb-5 pt-4 mt-2">
 			{/* <div className="stylebackground "></div> */}
 			<div className=" h-100 w-100">
 				<SessionYogaDetailsCard

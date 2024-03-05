@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			user: [],
+			loggedUser: null,
 			jivamuktiYoga: [],
 			jivamuktiSessionInfo: {},
 			vinyasaYoga: [],
@@ -17,7 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			harmonium: [],
 			teachers: [],
 			singleYogaSessionInfo: {},
-			contactus: {}
+			contactus: {},
 
 			// demo: [
 			// 	{
@@ -65,8 +66,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			login: async (email, password) => {
-				// console.log(email, password);
-				// console.log("funciona")
 				try {
 					let response = await fetch(process.env.BACKEND_URL + "/api/login", {
 						method: "POST",
@@ -81,13 +80,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					let data = await response.json()
 					if (response.status === 401) {
-						return false;
+						return 401;
+					}
+					if (response.status === 403) {
+						return 403;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					localStorage.setItem("user", JSON.stringify(data.user)) //para convertir los datos en string
+					setStore({ loggedUser: data })
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -116,10 +120,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
@@ -147,20 +151,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false;
 					}
 					localStorage.setItem("token", data.access_token)
-					console.log(data);
+					// console.log(data);
 					return true
 				} catch (error) {
-					console.log(error);
+					// console.log(error);
 					return false
 				}
 			},
+
+			getUserProfile: async () => {
+				let token = localStorage.getItem("token")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + `/api/user`, {
+						method: "GET",
+						headers: {
+							"Authorization": `Bearer ${token}` //pondremos el token en headers
+						},
+					});
+					let data = await response.json();
+					if (response.status === 200) {
+						setStore({ user: data.user });
+					}
+					return true
+				} catch (err) {
+					console.error(err);
+					return false
+				}
+			},
+
+
+
+
+
 			getAllSessions: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/yogatype");
-					console.log(response.status);
+					// console.log(response.status);
 					if (response.status === 200) {
 						const data = await response.json();
-						console.log(data);
+						// console.log(data);
 						setStore({ jivamuktiYoga: data.jivamukti_sessions, vinyasaYoga: data.vinyasa_sessions, hathaYoga: data.hatha_sessions, ashtangaYoga: data.ashtanga_sessions, rocketYoga: data.rocket_sessions, meditation: data.meditation_sessions, harmonium: data.harmonium_sessions });
 						return true;
 					} else {
@@ -178,9 +207,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "GET",
 					});
 					let data = await response.json();
-					console.log(yogatype, yogatype_Id);
-					console.log(response.status);
-					console.log(data)
+					// console.log(yogatype, yogatype_Id);
+					// console.log(response.status);
+					// console.log(data)
 					if (response.status === 200) {
 						if (yogatype == 'jivamuktiyoga') {
 							setStore({ singleYogaSessionInfo: data.jivamukti_session })
@@ -216,11 +245,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getAllTeachers: async () => {
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/api/theteachers");
-					console.log(response.status);
+					// console.log(response.status);
 
 					if (response.status === 200) {
 						const data = await response.json();
-						console.log(data);
 						setStore({ teachers: data.theteachers });
 						return true;
 					} else {
@@ -230,6 +258,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error(error);
 					return false;
 				}
+			},
+
+			unsubscribe: async () => {
+				let token = localStorage.getItem("token")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/unsubscribe", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": `Bearer ${token}` //pondremos el token en headers
+						},
+					})
+					if (response.status === 200) {
+						// console.log("unsubscribed")
+						return true;
+					}
+					else {
+						throw new Error("Error unsubscribing");
+					}
+				} catch (error) {
+					// console.error(error);
+					return false;
+				}
+
 
 			},
 			contactus: async (email, name, message) => {
@@ -261,6 +313,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			logout: () => {
+				// console.log("Logging out...");
+                localStorage.removeItem("token"); // Elimina el token del almacenamiento local
+                localStorage.removeItem("user"); // Elimina los datos de usuario del almacenamiento local
+                setStore({ loggedUser: null }); // Actualiza el estado indicando que no hay un usuario autenticado
+				console.log(store.loggedUser)
+            },
 
 
 		}
