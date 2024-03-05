@@ -68,6 +68,7 @@ class Testimony(db.Model):
             "id": self.id,
             "title": self.title,
             "description": self.description,
+            "date": self.date
             # do not serialize the password, its a security breach
         }
     

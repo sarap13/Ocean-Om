@@ -11,7 +11,7 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { UserProfile } from "./pages/userProfile";
 // import { PaymentCheckout } from "./pages/paymentcheckout.js"
-import { Login } from "./pages/login";
+
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 import { Signup } from "./pages/signup";
@@ -20,7 +20,7 @@ import { ContactUs } from "./pages/contactus";
 import { ThankYou } from "./pages/thankyou";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Testimonials } from "./component/testimonials.js";
+import { Testimonials } from "./pages/testimonial";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
 
 //create your first component

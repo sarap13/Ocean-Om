@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
 # instalar pipenv stripe
-import stripe
+# import stripe
 import json
 
 api = Blueprint('api', __name__)
@@ -16,7 +16,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # pasamos la key de stripe 
-stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
+# stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
 
 # 
 # Aquí haremos la rutas de backend
@@ -639,6 +639,7 @@ def get_testimony():
     
     testimony_query = Testimony.query.all()
     testimony_query = list(map(lambda item: item.serialize(),  testimony_query))
+    
     print(testimony_query)
     if testimony_query == [] or None:
         return jsonify({
@@ -650,6 +651,7 @@ def get_testimony():
         "testimony": testimony_query
     }
     return jsonify(response_body), 200   
+
 
 @api.route("/testimony", methods=["POST"])
 def create_testimony():
