@@ -105,7 +105,8 @@ def reset_password():
     user = db.session.query(User).filter(User.email == data.get("email")).first()
 
     if not user:
-        return jsonify({"error": "User not found"}), 404
+        return jsonify({"success": False, "message": "User not found"}), 404
+    
 
     # Generar una nueva contraseña
     new_password = generate_random_password()
@@ -119,7 +120,7 @@ def reset_password():
     msg.body = f'Your new password is: {new_password}'
     mail.send(msg)
 
-    return jsonify({"message": "Password reset successfully"}), 200
+    return jsonify({"success": "true", "message": "Password reset successfully"}), 200
 
 
 

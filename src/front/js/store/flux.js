@@ -324,25 +324,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 				try {
 					const response = await fetch(process.env.BACKEND_URL + "/reset-password", {
-						method: 'PUT',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({ email }),
+					   method: 'PUT',
+					   headers: {
+						  'Content-Type': 'application/json',
+					   },
+					   body: JSON.stringify({ email }),
 					});
-	
+			  
 					if (response.ok) {
-						alert('Password reset successful. Check your email for the new password.');
+					   return { success: true, message: 'Password reset successful. Check your email for the new password.' };
 					} else {
-						const data = await response.json();
-						
-						alert(`Error: ${data.error}`);
+					   const data = await response.json();
+					   console.error('Error response from server:', data);
+					   return { success: false, message: 'Error: User not found' };
 					}
-				} catch (error) {
-					console.error('Error:', error);
-					alert('An error occurred. Please try again later.');
-				}
-			
+				 } catch (error) {
+					// console.error('Error:', error);
+					return { success: false, message: `An unexpected error occurred.` };
+				 }
             }
 
 

@@ -21,13 +21,15 @@ export const ForgotPassword = () => {
     const [resetStatus, setResetStatus] = useState(null);
 
     async function handleRecovery(e) {
-        e.preventDefault();
+    e.preventDefault();
+
         try {
             const result = await actions.resetPassword(email);
+            console.log('Reset password result:', result);
             if (result.success) {
                 setResetStatus({ success: true, message: 'Password reset successful. Check your email for the new password.' });
             } else {
-                setResetStatus({ success: false, message: `Error: ${result.message}` });
+                setResetStatus({ success: false, message: result.message });
             }
         } catch (error) {
             setResetStatus({ success: false, message: `An unexpected error occurred.` });
@@ -38,8 +40,6 @@ export const ForgotPassword = () => {
 
     return (
     
-        
-
       
             <div className="container-fluid stylebackgrounding d-flex col-12 col-sm-12 col-md-6 col-lg-6 mb-5 ms-3 flex-column justify-content-center align-items-center text-secondary pt-5 mt-3">
                 <div className="d-block pr-3 me-5 col-6">
@@ -74,10 +74,10 @@ export const ForgotPassword = () => {
                         </div>
 
                         {resetStatus && (
-                    <div className={resetStatus.success ? 'alert alert-success' : 'alert alert-danger'} role="alert">
+                        <div className={resetStatus.success ? 'alert alert-success' : 'alert alert-danger'} role="alert">
                         {resetStatus.message}
-                    </div>
-                )}
+                        </div>
+                         )}
                     </div>
 
                     
