@@ -42,27 +42,6 @@ const CheckoutForm = () => {
     }, []);
 
 
-
-    // const bringPaymentFromLocalStorage => () {
-    //     localStorage.getItem("payment")
-    // }
-    // Create a Checkout Session as soon as the page loads
-    // fetch("https://organic-acorn-5g4grq55vjjf4q6j-3001.app.github.dev/api/signup/freetrial", {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    // })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         console.log(data)
-    //         setClientSecret(data.clientSecret);
-    //         // prueba 
-    //         // if (data.return_url) {
-    //         //     navigate(data.redirectUrl);
-    //         // }
-    //     })
-
     return (
         <div id="checkout" className="mt-5 pt-5">
             {clientSecret && (

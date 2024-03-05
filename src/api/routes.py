@@ -320,77 +320,6 @@ def get_theteachers():
     return jsonify(response_body), 200
 
 
-# @api.route('/jivamuktiyoga', methods=['GET'])
-# def get_jivamukti():    
-#     jivamukti_query = Jivamukti_yoga.query.all()
-#     jivamukti_query = list(map(lambda item: item.serialize(), jivamukti_query))
-#     # print(jivamukti_query)    
-#     if jivamukti_query == [] or None:
-#         return jsonify({
-#              "Msg": "No hay sesiones disponibles"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "jivamukti_sessions": jivamukti_query    }    
-        
-#     return jsonify(response_body), 200
-
-#Endpoint para que aparezca un jivamukti yoga especifico
-# @api.route('/jivamuktiyoga/<int:jivamukti_id>', methods=['GET'])
-# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
-# def get_one_jivamukti(jivamukti_id):
-#     jivamukti_query = Jivamukti_yoga.query.filter_by(id = jivamukti_id).first() #El filter sera con el id, no se podrá repetir
-#     # Te lo devuelve en crudo.
-    
-#     if jivamukti_query is None:
-#         return jsonify({
-#             "msg": "Jivamukti session not found"
-#         }), 404
-    
-#     response_body = {
-#         "msg": "ok",
-#         "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-#     }
-#     return jsonify(response_body), 200
-
-#endpoint para que aparezcan las clases de vinyasa
-# @api.route('/vinyasayoga', methods=['GET'])
-# def get_vinyasa():    
-#     vinyasa_query = Vinyasa_yoga.query.all()
-#     vinyasa_query = list(map(lambda item: item.serialize(), vinyasa_query))
-#     # print(jivamukti_query)    
-#     if vinyasa_query == [] or None:
-#         return jsonify({
-#              "Msg": "No hay sesiones Vinyasa disponibles"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "vinyasa_sessions": vinyasa_query    }    
-        
-#     return jsonify(response_body), 200
-
-
-# #Endpoint para que aparezca un vinyasa yoga especifico
-# @api.route('/vinyasayoga/<int:vinyasa_id>', methods=['GET'])
-# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
-# def get_one_vinyasa(vinyasa_id):
-#     vinyasa_query = Vinyasa_yoga.query.filter_by(id = vinyasa_id).first() #El filter sera con el id, no se podrá repetir
-#     # Te lo devuelve en crudo.
-#     if vinyasa_query is None:
-#         return jsonify({
-#             "msg": "vinyasa session not found"
-#         }), 404
-    
-#     response_body = {
-#         "msg": "ok",
-#         "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-#     }
-#     return jsonify(response_body), 200 
-
-
-
 #endpoint para registrarse
 @api.route("/signup", methods=["POST"])
 def signup():
@@ -446,6 +375,8 @@ def signup():
     return jsonify(response_body), 200
 
 
+
+
 #endpoint para registrarse
 @api.route("/signup/freetrial", methods=["POST"])
 def signup_free_trial():
@@ -460,7 +391,8 @@ def signup_free_trial():
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                     # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
-                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
+                    # 'price': 'price_1OpFEfIidK9VIejHfobZkWvI', (PRECIO DE LA SUBSCRIPCION NORMAL)
+                    'price': 'price_1Or5lZIidK9VIejHV3VkM9AE', #precio de la subscripcion FREE TRIAL, no me deja poner version prueba 
                     'quantity': 1,
                 },
             ],
@@ -479,12 +411,15 @@ def signup_free_trial():
     subscription = Subscription.query.filter_by(plan='Free Trial').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
     next_payment_date = ''
-    is_subscription_active = True
+    is_subscription_active = False
+    has_used_freetrial = False
+    filled_form = True
 
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
+
     # if subscription == 'Free Trial':
     next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
     
@@ -498,7 +433,9 @@ def signup_free_trial():
         subscription=subscription,
         next_payment_date=next_payment_date,
         last_payment_date=last_payment_date,
-        is_subscription_active=is_subscription_active
+        is_subscription_active=is_subscription_active,
+        has_used_freetrial=has_used_freetrial,
+        filled_form=filled_form
         )
     
     # print(new_user)
@@ -514,6 +451,39 @@ def signup_free_trial():
         }
     
     return jsonify(response_body), 200
+
+
+# para comprobar el estado de la sessioncheckout
+@api.route('/session-status', methods=['GET'])
+def session_status():
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify(error='Session ID is required'), 400
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except stripe.error.InvalidRequestError as e:
+        return jsonify(error=str(e)), 400
+    except stripe.error.StripeError as e:
+        return jsonify(error=str(e)), 500
+    
+    if not session:
+        return jsonify(error='Session not found'), 404
+    
+    customer_email = session.customer_details.get('email', 'N/A')
+
+    # Como queremos que el usuario no pueda acceder si no ha realizado el pago, si el estado es completo, filtramos el id por el del metodo de pago, y le ponemos la columna subscription active y ha usado el free trial true para que pueda acceder, pero si en el futuro intenta registrarse de nuevo con el free trial no pueda porque ya se ha registrado con ese plan.
+    if session.status == 'complete':
+        user = User.query.filter_by(email=customer_email).first()
+        if user:
+            user.is_subscription_active = True
+            user.has_used_freetrial = True
+            db.session.commit()
+            return jsonify(status=session.status, customer_email=session.customer_details.email)
+        else:
+            return jsonify(error='User not found'), 404
+
+    return jsonify(status=session.status, customer_email=customer_email, message="User subscription not activated")
+
 
 
 #endpoint para desuscribirse
@@ -552,22 +522,3 @@ def logout():
 
     return jsonify({"msg": "Logout exitoso"}), 200
 
-
-# para comprobar el estado de la sessioncheckout
-@api.route('/session-status', methods=['GET'])
-def session_status():
-    session_id = request.args.get('session_id')
-    print(session_id)
-    if not session_id:
-        return jsonify(error='Session ID is required'), 400
-    try:
-        session = stripe.checkout.Session.retrieve(session_id)
-    except stripe.error.InvalidRequestError as e:
-        return jsonify(error=str(e)), 400
-    except stripe.error.StripeError as e:
-        return jsonify(error=str(e)), 500
-    
-    if not session:
-        return jsonify(error='Session not found'), 404
-    customer_email = session.customer_details.get('email', 'N/A')
-    return jsonify(status=session.status, customer_email=session.customer_details.email)

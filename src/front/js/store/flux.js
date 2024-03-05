@@ -128,6 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
+
 			signupFree: async (name, lastname, date_of_birth, email, password, confirmPassword) => {
 				// console.log("funciona")
 				try {
@@ -136,7 +137,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							"Content-Type": "application/json"
 						},
-						// mode: 'cors',
 						body: JSON.stringify({
 							"email": email,
 							"password": password,
@@ -146,13 +146,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					})
 					let data = await response.json()
-					console.log(data);
 
 					if (response.status === 401) {
 						return false;
 					}
-					// setStore({payment : {clientSecret: data.clientSecret, session_id : data.session_id}})
+					// Almacenamos el clientsecret y la session id que nos da stripe en el local storage para pasarsela al formulario
 					localStorage.setItem("payment", JSON.stringify({clientSecret: data.clientSecret, session_id : data.session_id}))
+					
 					return true
 				} catch (error) {
 					// console.log(error);

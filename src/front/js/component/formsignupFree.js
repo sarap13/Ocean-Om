@@ -44,11 +44,12 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         <>
             <ToastContainer />
             <form className="stylebackgroundimg container d-flex  mt-3 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+                <h1 className="poiret-one-regular fs-6">First Step</h1>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4">
                         <div className="card-body">
-                            <div className="mt-5 text-start">
+                            <div className="mt-1 text-start">
                                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">Your beautiful first name</label>
                                 <input type="name" className="form-control" id="exampleInputName1" aria-describedby="emailHelp" onChange={(e) => setName(e.target.value)} />
                             </div>
@@ -79,7 +80,7 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                     </div>
                 </div>
 
-                <h1 className="poiret-one-regular mt-5">Enjoy our exclusive content for 3 days!</h1>
+                <h1 className="poiret-one-regular mt-3">Enjoy our exclusive content for 3 days!</h1>
                 <p>After those days your monthly subcription you'll be charged</p>
 
             </form>

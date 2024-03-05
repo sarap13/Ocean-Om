@@ -63,8 +63,8 @@ export function Return() {
                     </div>
 
                     <div className="mt-5 mb-5">
-                        <Link to="/sessions">
-                            <button type="button" className="btn btn-outline-secondary poiret-one-regular fs-5">Click here to start</button>
+                        <Link to="/login">
+                            <button type="button" className="btn btn-outline-secondary poiret-one-regular fs-5">Click here to login</button>
                         </Link>
                     </div>
 
