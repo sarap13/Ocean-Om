@@ -454,10 +454,11 @@ def signup_free_trial():
         filled_form=filled_form
         )
     
-    # print(new_user)
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
+
+    new_user.update_subscription_dates()
 
     response_body = {
         "msg": "the user has been created with the Free Trial plan",
@@ -492,7 +493,13 @@ def session_status():
         user = User.query.filter_by(email=customer_email).first()
         if user:
             user.is_subscription_active = True
-            user.has_used_freetrial = True
+
+            if user.subscription == 'Monthly':
+                user.last_payment_date = user.subscription_start_date
+
+            if user.subscription == 'Free Trial':
+                # user.last_payment_date = u
+                user.has_used_freetrial = True
             db.session.commit()
             return jsonify(status=session.status, customer_email=session.customer_details.email)
         else:

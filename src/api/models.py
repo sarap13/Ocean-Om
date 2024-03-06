@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -25,6 +26,18 @@ class User(db.Model):
 
     def __repr__(self):
         return f'{self.name} {self.last_name}'
+
+    def update_subscription_dates(self):
+        # Verificar si el usuario tiene una suscripción activa
+        if self.is_subscription_active:
+            # Convertir las fechas de cadena a objetos de fecha
+            last_payment_date = datetime.strptime(self.last_payment_date, "%Y-%m-%d")
+            next_payment_date = datetime.strptime(self.next_payment_date, "%Y-%m-%d")            # Calcular la nueva fecha de último pago (mes pasado)
+            new_last_payment_date = last_payment_date.replace(month=last_payment_date.month - 1) # Calcular la nueva fecha de siguiente pago (mes actual)
+            new_next_payment_date = next_payment_date.replace(month=next_payment_date.month + 1) # Actualizar las fechas en el objeto User
+            self.last_payment_date = new_last_payment_date.strftime("%Y-%m-%d")
+            self.next_payment_date = new_next_payment_date.strftime("%Y-%m-%d")            # Guardar los cambios en la base de datos
+            db.session.commit()
 
     def serialize(self):
         return {
