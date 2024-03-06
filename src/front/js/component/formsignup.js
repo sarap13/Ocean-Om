@@ -5,10 +5,9 @@ import "../../styles/signup.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const FormSignup = ({ freeTrial }) => {
+export const FormSignup = () => {
     const navigate = useNavigate();
     const [state, setState] = useState({
-        //initialize state here
     });
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
@@ -22,17 +21,17 @@ export const FormSignup = ({ freeTrial }) => {
     async function handleFormSignup(e) {
         e.preventDefault()
         let logged = ""
-        console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-        if (freeTrial) {
-            logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
-        } else {
-            logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        }
-        console.log(logged)
+        // console.log(name, lastname, date_of_birth, email, password, confirmPassword);
+        // if (freeTrial) {
+        logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
+        // } else {
+        //     logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
+        // }
+        // console.log(logged)
         if (logged) {
-            navigate("/sessions")
+            navigate("/paymentdetails")
         } else {
-            toast.error("Invalid email or password");
+            toast.error("Error while creating the account");
         }
     }
     
@@ -68,7 +67,7 @@ export const FormSignup = ({ freeTrial }) => {
                             <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
                             <label htmlFor="exampleInputConfirmPassword1" className="form-label mt-3">Again, just in case</label>
                             <input type="password" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
-                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5">Sign Up</button>
+                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5" onClick={handleFormSignup}>Sign Up</button>
                         </div>
                     </div>
                 </div>

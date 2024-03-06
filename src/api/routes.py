@@ -323,10 +323,25 @@ def get_theteachers():
 #endpoint para registrarse
 @api.route("/signup", methods=["POST"])
 def signup():
-    # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
+ # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
     request_body = request.json
-    # Creamos variable y se la metemos dentro de user(Como otra instancia, cada user es una)
-    # le damos como valores a name y password los request que pondremos en el Postman
+    
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI', #(PRECIO DE LA SUBSCRIPCION NORMAL)
+                    'quantity': 1,
+                },
+            ],
+            return_url="https://organic-acorn-5g4grq55vjjf4q6j-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return jsonify(error=str(e)), 500
     
     data = request.json
     name = data.get('name')
@@ -335,18 +350,19 @@ def signup():
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
     subscription_start_date = datetime.now().date() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
-    plan = data.get('plan')
+    subscription = Subscription.query.filter_by(plan='Monthly').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
     next_payment_date = ''
-    is_subscription_active = True
+    is_subscription_active = False
+    has_used_freetrial = False
+    filled_form = True
 
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-    last_payment_date = subscription_start_date
-    next_payment_date = last_payment_date + timedelta(days=30)
-
+    next_payment_date = subscription_start_date + timedelta(days=30) #que el proximo pago sea 3 dias después de registrarse
+    
     new_user = User(
         name=name, 
         last_name=last_name, 
@@ -354,9 +370,12 @@ def signup():
         email=email, 
         date_of_birth=date_of_birth, 
         subscription_start_date=subscription_start_date,
+        subscription=subscription,
         next_payment_date=next_payment_date,
         last_payment_date=last_payment_date,
-        is_subscription_active=is_subscription_active
+        is_subscription_active=is_subscription_active,
+        has_used_freetrial=has_used_freetrial,
+        filled_form=filled_form
         )
     
     # print(new_user)
@@ -364,12 +383,11 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
-    # generamos el token de este usuario
-    access_token = create_access_token(identity=new_user.name)
-
     response_body = {
-        "msg": "the user has been created",
-        "access_token": access_token
+        "msg": "the user has been created with the Monthly plan",
+        "session_id" : session.id,
+        "clientSecret" : session.client_secret,
+        "user" : new_user.serialize()
         }
     
     return jsonify(response_body), 200
@@ -419,9 +437,7 @@ def signup_free_trial():
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-
-    # if subscription == 'Free Trial':
-    next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
+    next_payment_date = subscription_start_date + timedelta(days=3) #que el proximo pago sea 3 dias después de registrarse
     
     new_user = User(
         name=name, 

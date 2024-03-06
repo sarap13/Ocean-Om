@@ -97,31 +97,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			signup: async (name, lastname, date_of_birth, email, password, confirmPassword) => {
-				// console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-				console.log("funciona")
+				// console.log("funciona")
 				try {
 					let response = await fetch(process.env.BACKEND_URL + "/api/signup", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
 						},
-						// mode: 'cors',
 						body: JSON.stringify({
 							"email": email,
 							"password": password,
 							"name": name,
 							"last_name": lastname,
 							"date_of_birth": date_of_birth,
-							"role": "Student",
-							"plan": "Subscription"
 						})
 					})
 					let data = await response.json()
+
 					if (response.status === 401) {
 						return false;
 					}
-					localStorage.setItem("token", data.access_token)
-					// console.log(data);
+					// Almacenamos el clientsecret y la session id que nos da stripe en el local storage para pasarsela al formulario
+					localStorage.setItem("payment", JSON.stringify({clientSecret: data.clientSecret, session_id : data.session_id}))
+					
 					return true
 				} catch (error) {
 					// console.log(error);
