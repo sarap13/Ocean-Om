@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			singleYogaSessionInfo: {},
 			contactus: {},
 			payment: {},
+			testimonials: []
 
 			// demo: [
 			// 	{
@@ -341,7 +342,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// console.error('Error:', error);
 					return { success: false, message: `An unexpected error occurred.` };
 				 }
-            }
+            },
+
+			testimonials: async (title, description, date) => {
+				// console.log(email, password);
+				// console.log("funciona")
+				try {
+					let response = await fetch(process.env.BACKEND_URL + "/api/testimony", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						// mode: 'cors',
+						body: JSON.stringify({
+							"title": title,
+							"description": description,
+							"date": date
+						})
+					})
+					let data = await response.json()
+					if (response.status === 401) {
+						return false;
+					}
+					localStorage.setItem("token", data.access_token)
+					console.log(data);
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+			},
+
+			getAllTestimonials: async () => {
+				try {
+					const response = await fetch(process.env.BACKEND_URL + "/api/testimony");
+					
+				
+					if (response.status === 200) {
+						const data = await response.json();
+						setStore({ testimonials: data.testimony });
+						return true;
+					} else {
+						throw new Error("Error fetching testimonials data");
+					}
+				} catch (error) {
+					console.error(error);
+					return false;
+				}
+			},
+
+			
+
+
+			
 
 
 		}
@@ -349,3 +402,5 @@ const getState = ({ getStore, getActions, setStore }) => {
 };
 
 export default getState;
+
+

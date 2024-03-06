@@ -64,7 +64,6 @@ setup_commands(app)
 # pasamos la key de stripe 
 stripe.api_key = 'sk_test_51OpE0kIidK9VIejHQioxhK3j2iEHNMYKDbpW58el6pZkfkJSsE2KrDRnvbPUW6FQIhkWxZPqMWOeFAfghDWb8Kix00jNmnBWlz'
 
-
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 

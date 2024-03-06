@@ -17,6 +17,7 @@ export const Sessions = () => {
 
 	const { store, actions } = useContext(Context);
 	const navigate = useNavigate();
+	const isLoggedIn = store.loggedUser !== null; //creamos const para saber si el user esta logeado
 
 	useEffect(() => {
 		actions.getAllSessions();
@@ -42,6 +43,7 @@ export const Sessions = () => {
 						<span className="text-light fs-5 text-start mt-3">
 							Find any class and practice as you were in a yoga studio.
 						</span>
+						{!isLoggedIn ? (
 						<div className="d-block align-items-center justify-content-start mt-5">
 							<Link to="/signup/freetrial">
 								<button type="button" className="btn btn-outline-light btn-lg">
@@ -49,7 +51,7 @@ export const Sessions = () => {
 								</button>
 							</Link>
 						</div>
-
+						) : (null)}
 					</div>
 				</div>
 			</div>

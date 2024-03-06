@@ -11,7 +11,6 @@ import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { UserProfile } from "./pages/userProfile";
 import { Return } from "./pages/Return.js";
-// import { PaymentCheckout } from "./pages/paymentcheckout.js";
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 import { Signup } from "./pages/signup";
@@ -22,6 +21,7 @@ import { ForgotPass } from "./pages/forgotpass";
 import { CheckInbox } from "./pages/checkyourinbox.js";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Testimonials } from "./pages/testimonial";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
 import CheckoutForm from "./component/checkoutForm.js";
 
@@ -33,7 +33,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div style={{ backgroundColor: "#FBF9F1" }}>
+        <div style={{  backgroundColor: "#FBF9F1"  }}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
@@ -45,6 +45,7 @@ const Layout = () => {
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/paymentdetails" element={<CheckoutForm />} />
+                        <Route path="/testimonials" element={<Testimonials />} />
                         <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
