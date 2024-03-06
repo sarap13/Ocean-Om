@@ -4,6 +4,7 @@ import { Testimony } from "../component/testimonialsCARD";
 import { TestimonialForm } from "../component/testimonialFORM";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
+import "../../styles/testimonials.css";
 
 export const Testimonials = () => {
 	const { store, actions } = useContext(Context)

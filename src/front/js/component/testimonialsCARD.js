@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 // import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import "../../styles/classes.css";
+import "../../styles/testimonials.css";
 
 export const Testimony = (props) => {
 
