@@ -458,7 +458,7 @@ def signup_free_trial():
     db.session.add(new_user)
     db.session.commit()
 
-    new_user.update_subscription_dates()
+    # new_user.update_subscription_dates()
 
     response_body = {
         "msg": "the user has been created with the Free Trial plan",

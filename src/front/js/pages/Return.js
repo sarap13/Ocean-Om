@@ -34,7 +34,7 @@ export function Return() {
         const sessionId = urlParams.get('session_id');
         // Hacemos un fetch del endpoint session-status para que nos pase la info del proceso de pago y el id
         // El fetch nos da como respuesta el email y el estado del pago
-        fetch(`https://organic-acorn-5g4grq55vjjf4q6j-3001.app.github.dev/api/session-status?session_id=${sessionId}`)
+        fetch(`${process.env.BACKEND_URL}/api/session-status?session_id=${sessionId}`)
             .then((res) => res.json())
             .then((data) => {
                 setStatus(data.status);
