@@ -338,7 +338,7 @@ def signup():
                     'quantity': 1,
                 },
             ],
-            return_url="https://refactored-winner-pjgjwr997xpc7j9g-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+            return_url="https://urban-couscous-4xv74wx566q2j6jv-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
         )
     except Exception as e:
         return jsonify(error=str(e)), 500
@@ -414,7 +414,7 @@ def signup_free_trial():
                     'quantity': 1,
                 },
             ],
-            return_url="https://refactored-winner-pjgjwr997xpc7j9g-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+            return_url="https://urban-couscous-4xv74wx566q2j6jv-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
         )
     except Exception as e:
         return jsonify(error=str(e)), 500
