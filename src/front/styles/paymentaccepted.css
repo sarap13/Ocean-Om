@@ -1,0 +1,11 @@
+
+.backgroundImage {
+    background-image: url("https://png.pngtree.com/background/20230222/original/pngtree-instagram-filter-style-tower-of-stones-piles-on-top-of-a-picture-image_2046730.jpg");
+    /* background-image: url("https://i.pinimg.com/736x/d9/39/a4/d939a4e90ddd6663594c1c120ca232a3.jpg"); */
+    /* background-image: url("https://media.istockphoto.com/id/1313452220/es/foto/cierra-las-manos-la-mujer-hace-yoga-al-aire-libre-mujer-ejercitando-vital-y-meditaci%C3%B3n-para-el.jpg?s=612x612&w=0&k=20&c=5pHFA4L0h6_jVzTh0_M6-Y2-2nyo5cfQ9FTFEQsALkI="); */
+
+    background-color: rgba(255, 254, 254, 0.8);
+    background-repeat: no-repeat;
+    background-size: cover; /* Ajusta el tamaño de la imagen según sea necesario */
+    background-position: center; /* Centra la imagen */
+}

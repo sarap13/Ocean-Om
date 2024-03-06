@@ -10,8 +10,7 @@ import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { UserProfile } from "./pages/userProfile";
-// import { PaymentCheckout } from "./pages/paymentcheckout.js"
-
+import { Return } from "./pages/Return.js";
 import { Sessions } from "./pages/classes";
 import { Teachers } from "./pages/teachers";
 import { Signup } from "./pages/signup";
@@ -24,19 +23,11 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Testimonials } from "./pages/testimonial";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
+import CheckoutForm from "./component/checkoutForm.js";
 
 //create your first component
 const Layout = () => {
-    // const { actions, store } = useContext(Context);
-    // Use efect para traer el token si esta logeado el usuario
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (token) {
-    //         actions.loginWithToken(token);
-    //     }
-    // }, []);
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
@@ -53,8 +44,8 @@ const Layout = () => {
                         {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
                         <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/paymentdetails" element={<CheckoutForm />} />
                         <Route path="/testimonials" element={<Testimonials />} />
-                        {/* <Route path="/paymentdetails" element={<PaymentCheckout />} /> */}
                         <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
@@ -68,7 +59,8 @@ const Layout = () => {
                         <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/signup/freetrial" element={<SignupFreeTrial />} />
-
+                        {/* <Route path="/success" element={<PaymentSuccess />} /> */}
+                        <Route path="/return" element={<Return />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

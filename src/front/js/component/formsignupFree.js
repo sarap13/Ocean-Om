@@ -1,11 +1,14 @@
-import React, { useContext, useState, } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/signup.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const FormSignupFreeTrial = ({ freeTrial }) => {
+
+    // const { store, actions } = useContext(Context);
+
     const navigate = useNavigate();
     const [state, setState] = useState({
         //initialize state here
@@ -20,19 +23,20 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
     const { store, actions } = useContext(Context)
 
     async function handleFormSignupFreeTrial(e) {
+        // actions.signupFree();
         e.preventDefault()
         let logged = ""
-        console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-        if (freeTrial) {
-            logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
-        } else {
-            logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        }
-        console.log(logged)
+        // console.log(name, lastname, date_of_birth, email, password, confirmPassword);
+        // if (freeTrial) {
+        logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
+        // } else {
+        //     logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
+        // }
+        // console.log(logged)
         if (logged) {
-            navigate("/sessions")
+            navigate("/paymentdetails")
         } else {
-            toast.error("Invalid email or password");
+            toast.error("Error while creating the account");
         }
     }
 
@@ -40,11 +44,12 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         <>
             <ToastContainer />
             <form className="stylebackgroundimg container d-flex  mt-3 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+                <h1 className="poiret-one-regular fs-6">First Step</h1>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4">
                         <div className="card-body">
-                            <div className="mt-5 text-start">
+                            <div className="mt-1 text-start">
                                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">Your beautiful first name</label>
                                 <input type="name" className="form-control" id="exampleInputName1" aria-describedby="emailHelp" onChange={(e) => setName(e.target.value)} />
                             </div>
@@ -68,12 +73,14 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                             <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
                             <label htmlFor="exampleInputConfirmPassword1" className="form-label mt-3">Again, just in case</label>
                             <input type="password" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
-                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5">Sign Up</button>
+                            {/* <Link to="/paymentdetails"> */}
+                            <button type="submit" className="btn btn-outline-secondary w-50 mt-5" onClick={handleFormSignupFreeTrial}>Sign Up</button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>
 
-                <h1 className="poiret-one-regular mt-5">Enjoy our exclusive content for 3 days!</h1>
+                <h1 className="poiret-one-regular mt-3">Enjoy our exclusive content for 3 days!</h1>
                 <p>After those days your monthly subcription you'll be charged</p>
 
             </form>

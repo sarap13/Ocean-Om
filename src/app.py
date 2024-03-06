@@ -16,7 +16,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
-# import stripe
+import stripe
 
 
 
@@ -62,8 +62,7 @@ setup_admin(app)
 setup_commands(app)
 
 # pasamos la key de stripe 
-# stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
-
+stripe.api_key = 'sk_test_51OpE0kIidK9VIejHQioxhK3j2iEHNMYKDbpW58el6pZkfkJSsE2KrDRnvbPUW6FQIhkWxZPqMWOeFAfghDWb8Kix00jNmnBWlz'
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')

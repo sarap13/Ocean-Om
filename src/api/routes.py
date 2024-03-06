@@ -6,8 +6,9 @@ from api.models import db, User, Subscription, Testimony, Contact, Session, Inst
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
+from stripe.error import InvalidRequestError
 # instalar pipenv stripe
-# import stripe
+import stripe
 import json
 
 api = Blueprint('api', __name__)
@@ -16,7 +17,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # pasamos la key de stripe 
-# stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
+stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
 
 # 
 # Aquí haremos la rutas de backend
@@ -319,84 +320,28 @@ def get_theteachers():
     return jsonify(response_body), 200
 
 
-# @api.route('/jivamuktiyoga', methods=['GET'])
-# def get_jivamukti():    
-#     jivamukti_query = Jivamukti_yoga.query.all()
-#     jivamukti_query = list(map(lambda item: item.serialize(), jivamukti_query))
-#     # print(jivamukti_query)    
-#     if jivamukti_query == [] or None:
-#         return jsonify({
-#              "Msg": "No hay sesiones disponibles"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "jivamukti_sessions": jivamukti_query    }    
-        
-#     return jsonify(response_body), 200
-
-#Endpoint para que aparezca un jivamukti yoga especifico
-# @api.route('/jivamuktiyoga/<int:jivamukti_id>', methods=['GET'])
-# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
-# def get_one_jivamukti(jivamukti_id):
-#     jivamukti_query = Jivamukti_yoga.query.filter_by(id = jivamukti_id).first() #El filter sera con el id, no se podrá repetir
-#     # Te lo devuelve en crudo.
-    
-#     if jivamukti_query is None:
-#         return jsonify({
-#             "msg": "Jivamukti session not found"
-#         }), 404
-    
-#     response_body = {
-#         "msg": "ok",
-#         "jivamukti_session": jivamukti_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-#     }
-#     return jsonify(response_body), 200
-
-#endpoint para que aparezcan las clases de vinyasa
-# @api.route('/vinyasayoga', methods=['GET'])
-# def get_vinyasa():    
-#     vinyasa_query = Vinyasa_yoga.query.all()
-#     vinyasa_query = list(map(lambda item: item.serialize(), vinyasa_query))
-#     # print(jivamukti_query)    
-#     if vinyasa_query == [] or None:
-#         return jsonify({
-#              "Msg": "No hay sesiones Vinyasa disponibles"
-#              }), 404
-        
-#     response_body = {
-#         "msg": "ok",
-#         "vinyasa_sessions": vinyasa_query    }    
-        
-#     return jsonify(response_body), 200
-
-
-# #Endpoint para que aparezca un vinyasa yoga especifico
-# @api.route('/vinyasayoga/<int:vinyasa_id>', methods=['GET'])
-# # Si devuelve ok aparecerá en la consola de vscode el numero de id.
-# def get_one_vinyasa(vinyasa_id):
-#     vinyasa_query = Vinyasa_yoga.query.filter_by(id = vinyasa_id).first() #El filter sera con el id, no se podrá repetir
-#     # Te lo devuelve en crudo.
-#     if vinyasa_query is None:
-#         return jsonify({
-#             "msg": "vinyasa session not found"
-#         }), 404
-    
-#     response_body = {
-#         "msg": "ok",
-#         "vinyasa_session": vinyasa_query.serialize() #Hacemos el serialize para mostrar la informacion tratada.
-#     }
-#     return jsonify(response_body), 200 
-
-
-
 #endpoint para registrarse
 @api.route("/signup", methods=["POST"])
 def signup():
-    # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
+ # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
     request_body = request.json
-    # Creamos variable y se la metemos dentro de user(Como otra instancia, cada user es una)
-    # le damos como valores a name y password los request que pondremos en el Postman
+    
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+                    'price': 'price_1OpFEfIidK9VIejHfobZkWvI', #(PRECIO DE LA SUBSCRIPCION NORMAL)
+                    'quantity': 1,
+                },
+            ],
+            return_url="https://refactored-winner-pjgjwr997xpc7j9g-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return jsonify(error=str(e)), 500
     
     data = request.json
     name = data.get('name')
@@ -405,18 +350,19 @@ def signup():
     email = data.get('email')
     date_of_birth = data.get('date_of_birth')
     subscription_start_date = datetime.now().date() #para que aparezca la fecha de registro en la fecha actual de rellenar el formulario
-    plan = data.get('plan')
+    subscription = Subscription.query.filter_by(plan='Monthly').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
     next_payment_date = ''
-    is_subscription_active = True
+    is_subscription_active = False
+    has_used_freetrial = False
+    filled_form = True
 
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-    last_payment_date = subscription_start_date
-    next_payment_date = last_payment_date + timedelta(days=30)
-
+    next_payment_date = subscription_start_date + timedelta(days=30) #que el proximo pago sea 3 dias después de registrarse
+    
     new_user = User(
         name=name, 
         last_name=last_name, 
@@ -424,9 +370,12 @@ def signup():
         email=email, 
         date_of_birth=date_of_birth, 
         subscription_start_date=subscription_start_date,
+        subscription=subscription,
         next_payment_date=next_payment_date,
         last_payment_date=last_payment_date,
-        is_subscription_active=is_subscription_active
+        is_subscription_active=is_subscription_active,
+        has_used_freetrial=has_used_freetrial,
+        filled_form=filled_form
         )
     
     # print(new_user)
@@ -434,15 +383,16 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
-    # generamos el token de este usuario
-    access_token = create_access_token(identity=new_user.name)
-
     response_body = {
-        "msg": "the user has been created",
-        "access_token": access_token
+        "msg": "the user has been created with the Monthly plan",
+        "session_id" : session.id,
+        "clientSecret" : session.client_secret,
+        "user" : new_user.serialize()
         }
     
     return jsonify(response_body), 200
+
+
 
 
 #endpoint para registrarse
@@ -450,6 +400,24 @@ def signup():
 def signup_free_trial():
     # El request_body o cuerpo de la solicitud ya está decodificado en formato JSON y se encuentra en la variable request.json
     request_body = request.json
+    
+    try:
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            ui_mode = 'embedded', #para que no se rediriga sino navegue entre nuestra app
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    # ya incluido el id de la subscripcion mensual de 16 euros hecha en el dashboard de Sprite
+                    # 'price': 'price_1OpFEfIidK9VIejHfobZkWvI', (PRECIO DE LA SUBSCRIPCION NORMAL)
+                    'price': 'price_1Or5lZIidK9VIejHV3VkM9AE', #precio de la subscripcion FREE TRIAL, no me deja poner version prueba 
+                    'quantity': 1,
+                },
+            ],
+            return_url="https://refactored-winner-pjgjwr997xpc7j9g-3000.app.github.dev" + '/return?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return jsonify(error=str(e)), 500
     
     data = request.json
     name = data.get('name')
@@ -461,16 +429,16 @@ def signup_free_trial():
     subscription = Subscription.query.filter_by(plan='Free Trial').first() #seleccionamos la opcion del plan Free Trial
     last_payment_date = ''
     next_payment_date = ''
-    is_subscription_active = True
+    is_subscription_active = False
+    has_used_freetrial = False
+    filled_form = True
 
     # Example validation
     if not email or not password or not name or not last_name or not date_of_birth:
         return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
     
-    # if subscription == 'Free Trial':
-    next_payment_date = subscription_start_date + timedelta(days=4) #que el proximo pago sea 3 dias después de registrarse
+    next_payment_date = subscription_start_date + timedelta(days=3) #que el proximo pago sea 3 dias después de registrarse
     
-
     new_user = User(
         name=name, 
         last_name=last_name, 
@@ -481,22 +449,64 @@ def signup_free_trial():
         subscription=subscription,
         next_payment_date=next_payment_date,
         last_payment_date=last_payment_date,
-        is_subscription_active=is_subscription_active
+        is_subscription_active=is_subscription_active,
+        has_used_freetrial=has_used_freetrial,
+        filled_form=filled_form
         )
     
-    # print(new_user)
     # Le decimos que lo agregue y que lo comitee 
     db.session.add(new_user)
     db.session.commit()
 
-    # generamos el token de este usuario
-    access_token = create_access_token(identity=new_user.name)
+    # new_user.update_subscription_dates()
 
     response_body = {
         "msg": "the user has been created with the Free Trial plan",
-        "access_token": access_token
+        "session_id" : session.id,
+        "clientSecret" : session.client_secret,
+        "user" : new_user.serialize()
         }
+    
     return jsonify(response_body), 200
+
+
+# para comprobar el estado de la sessioncheckout
+@api.route('/session-status', methods=['GET'])
+def session_status():
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return jsonify(error='Session ID is required'), 400
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except stripe.error.InvalidRequestError as e:
+        return jsonify(error=str(e)), 400
+    except stripe.error.StripeError as e:
+        return jsonify(error=str(e)), 500
+    
+    if not session:
+        return jsonify(error='Session not found'), 404
+    
+    customer_email = session.customer_details.get('email', 'N/A')
+
+    # Como queremos que el usuario no pueda acceder si no ha realizado el pago, si el estado es completo, filtramos el id por el del metodo de pago, y le ponemos la columna subscription active y ha usado el free trial true para que pueda acceder, pero si en el futuro intenta registrarse de nuevo con el free trial no pueda porque ya se ha registrado con ese plan.
+    if session.status == 'complete':
+        user = User.query.filter_by(email=customer_email).first()
+        if user:
+            user.is_subscription_active = True
+
+            if user.subscription == 'Monthly':
+                user.last_payment_date = user.subscription_start_date
+
+            if user.subscription == 'Free Trial':
+                # user.last_payment_date = u
+                user.has_used_freetrial = True
+            db.session.commit()
+            return jsonify(status=session.status, customer_email=session.customer_details.email)
+        else:
+            return jsonify(error='User not found'), 404
+
+    return jsonify(status=session.status, customer_email=customer_email, message="User subscription not activated")
+
 
 
 #endpoint para desuscribirse
@@ -508,7 +518,7 @@ def unsubscribe():
 
     if user:
         if user.subscription_end_date is None: #si no hay fecha de subscripción, añade la actual
-            user.subscription_end_date = datetime.utcnow()
+            user.subscription_end_date = datetime.today().date()
             user.is_subscription_active = False
             db.session.commit()
             return jsonify({
@@ -536,102 +546,6 @@ def logout():
     return jsonify({"msg": "Logout exitoso"}), 200
 
 
-
-
-# hay que importar stripe!!!!
-# arriba se pone la clave de stripe
-#endpoint para desuscribirse
-@api.route("/checkout", methods=["POST"])
-# @jwt_required()
-def processing_payment():
-    try:
-        data = json.loads(request.data)
-        # Create a PaymentIntent with the order amount and currency
-        intent = stripe.PaymentIntent.create(
-            amount=calculate_order_amount(data['items']),
-            currency='eur',
-            # In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-            automatic_payment_methods={
-                'enabled': True,
-            },
-        )
-        return jsonify({
-            'clientSecret': intent['client_secret']
-        })
-    except Exception as e:
-        return jsonify(error=str(e)), 403
-
-
-
-        print (data)
-        # Obtienes el id del usuario por el token
-        current_user_email = get_jwt_identity()
-        user = User.query.filter_by(email=current_user_email).first()
-
-        # si no está en usuario
-        if not user:
-            return jsonify({"msg": "User not found"}), 404
-        
-        # Crea una sesión de checkout para la suscripción
-        # checkout_session = stripe.checkout.Session.create(
-        #     payment_method_types=['card'],
-        #     line_items=[{
-        #         'price': 'price_1OpFEfIidK9VIejHfobZkWvI',
-        #         'quantity': 1,
-        #     }],
-        #     mode='subscription',
-        #     success_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
-        #     cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html',
-        #     customer=user.stripe_customer_id,  # ID del cliente de Stripe
-        # )
-
-        # # Devuelve una respuesta exitosa si todo está bien
-        # return jsonify({"message": "Payment processed successfully"}), 200
-
-    # except error.StripeError as e:
-    #     return jsonify({"error": str(e)}), 500
-    # # # llamamos a lo que nos envian
-    # request_body = request.json
-    # data = request_body
-
-    # id = data.get('id')
-    # amount = data.get('amount')
-    # print(data)
-    # print(request_body)
-    # response_body = {
-    #     "msg": "the payment has been proceed",
-    #     "access_token": access_token
-    #     }
-    
-
-    # checkout_register_session = stripe.checkout.create(
-    #     subscription = {
-    #         'price': "price_1OpFEfIidK9VIejHfobZkWvI",
-    #         'quantity': 1
-    #     },
-    #     mode="subscription",
-    #     succes_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/success.html',
-    #     cancel_url='https://fuzzy-robot-9p59vjprq4vhx45w-3000.app.github.dev/cancel.html'
-    # )
-    # return redirect(checkout_register_session.url, code=303)
-
-        # charge = stripe.Charge.create(
-        #     amount=1000,  # Monto en centavos (por ejemplo, $10.00)
-        #     currency='usd',
-        #     source=token,  # Token de pago generado por Stripe Elements
-        #     description='Pago mensual de suscripción'
-        # )
-    
-
-#endopoint para ver y agregar los testimonials
-    
-# @api.route("/testimonials", methods=["POST"])
-# @jwt_required()
-# def add_testimonials():        
-#   current_user_email = get_jwt_identity()
-#   user = User.query.filter_by(email=current_user_email).first()
-#voy a terner que recuperar la informacion del request voy a tener que tener que desncriptar el token para obtener al usuario voy a agregar en mi modelo de testimonios 
-# donde titulo,descrpcion y data va ser = a la inforcion que recupere del request y usuario va ser = a el usuario que me de cuando desencripte el token    
 
 #endpoint the testimony
 @api.route('/testimony', methods=['GET'])
