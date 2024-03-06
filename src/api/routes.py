@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, unset_jwt_cookies
 from datetime import datetime, timedelta
 # instalar pipenv stripe
-import stripe
+# import stripe
 import json
 
 api = Blueprint('api', __name__)
@@ -16,7 +16,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # pasamos la key de stripe 
-stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
+# stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
 
 # 
 # Aquí haremos la rutas de backend
@@ -522,7 +522,7 @@ def unsubscribe():
     else:
         return jsonify({
             "msg": "User not found"
-        }), 404
+        }), 404    
 
 
 @api.route('/logout', methods=['POST'])
@@ -622,3 +622,67 @@ def processing_payment():
         #     description='Pago mensual de suscripción'
         # )
     
+
+#endopoint para ver y agregar los testimonials
+    
+# @api.route("/testimonials", methods=["POST"])
+# @jwt_required()
+# def add_testimonials():        
+#   current_user_email = get_jwt_identity()
+#   user = User.query.filter_by(email=current_user_email).first()
+#voy a terner que recuperar la informacion del request voy a tener que tener que desncriptar el token para obtener al usuario voy a agregar en mi modelo de testimonios 
+# donde titulo,descrpcion y data va ser = a la inforcion que recupere del request y usuario va ser = a el usuario que me de cuando desencripte el token    
+
+#endpoint the testimony
+@api.route('/testimony', methods=['GET'])
+def get_testimony():
+    
+    testimony_query = Testimony.query.all()
+    testimony_query = list(map(lambda item: item.serialize(),  testimony_query))
+    
+    print(testimony_query)
+    if testimony_query == [] or None:
+        return jsonify({
+             "Msg": "There aren't Testimony available."
+             }), 404
+    
+    response_body = {
+        "msg": "ok",
+        "testimony": testimony_query
+    }
+    return jsonify(response_body), 200   
+
+
+@api.route("/testimony", methods=["POST"])
+def create_testimony():
+    
+    request_body = request.json
+   
+    data = request.json
+    
+    title = data.get ("title"),
+    description = data.get ("description"),
+    date = datetime.today()
+
+     # Example validation
+    if not title or not description:
+        return jsonify({'Error': 'All the fields are required'}), 400    # Example database interaction (using SQLAlchemy)
+ 
+    new_testimony = Testimony(
+        title=title,
+        description=description,
+        date=date
+             
+        )
+    
+
+    print(new_testimony)
+    # Le decimos que lo agregue y que lo comitee 
+    db.session.add(new_testimony)
+    db.session.commit()
+
+    response_body = {
+        "msg": "the testimony has been sent",
+        }
+    
+    return jsonify(response_body), 200 

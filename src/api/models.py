@@ -58,11 +58,6 @@ class Testimony(db.Model):
     title = db.Column(db.String(120), unique=False, nullable=False)
     description = db.Column(db.String(120), unique=True, nullable=False)
     date = db.Column(db.String(120), unique=True, nullable=False)
-    id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user =  db.relationship('User', backref='testimony', lazy=True)
-    
-    id_session = db.Column(db.Integer, db.ForeignKey('session.id')) #unimos la sesion de la que crea el testimonio en caso necesario 
-
 
 
     def __repr__(self):
@@ -73,6 +68,7 @@ class Testimony(db.Model):
             "id": self.id,
             "title": self.title,
             "description": self.description,
+            "date": self.date
             # do not serialize the password, its a security breach
         }
     
