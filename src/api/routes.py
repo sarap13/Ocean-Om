@@ -10,6 +10,8 @@ from stripe.error import InvalidRequestError
 # instalar pipenv stripe
 import stripe
 import json
+import os
+
 
 api = Blueprint('api', __name__)
 
@@ -17,7 +19,7 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 # pasamos la key de stripe 
-stripe.api_key = 'pk_test_51OpE0kIidK9VIejHKyNrBNE8euj3lbZqmT4C0YODA2Pfsp4sSnKKqoQ193u2Eszc1A8GZoLlTksoHPA2TgHMpexD00uhFYcgzc'
+stripe.api_key = os.getenv('STRIPE_PUBLIC_KEY')
 
 # 
 # Aquí haremos la rutas de backend

@@ -29,8 +29,8 @@ app = Flask(__name__)
 
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = '6ab813cd069f69'
-app.config['MAIL_PASSWORD'] = '068a39ff594010'
+app.config['MAIL_USERNAME'] = os.getenv('FLASK_MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('FLASK_MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
@@ -62,7 +62,7 @@ setup_admin(app)
 setup_commands(app)
 
 # pasamos la key de stripe 
-stripe.api_key = 'sk_test_51OpE0kIidK9VIejHQioxhK3j2iEHNMYKDbpW58el6pZkfkJSsE2KrDRnvbPUW6FQIhkWxZPqMWOeFAfghDWb8Kix00jNmnBWlz'
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
