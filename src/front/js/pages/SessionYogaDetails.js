@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/singleDetails.css";
+import "../../styles/index.css";
 import { SessionYogaDetailsCard } from "../component/SessionYogaDetailsCard";
 
 export const SessionYogaDetails = () => {
@@ -14,14 +14,10 @@ export const SessionYogaDetails = () => {
 	useEffect(() => {
 		actions.getOneYogatypeSession(params.yogatype, params.theid)
 		// console.log("Store in JivamutkiYogaDetailsCard:", store.singleSessionInfo.name);
-		// console.log(params.yogatype)
-		// Envias a la función la parte que coge la url dinamica y se lo pasas al flux como parametro.
 
 	}, [])
-
 	return (
-		<div className="jumbotron align-items-center container-fluid h-100 pb-5 pt-4 mt-2">
-			{/* <div className="stylebackground "></div> */}
+		<div className="backgroundWaves jumbotron align-items-center container-fluid h-100 pb-5 pt-5 mt-md-2 mt-ms-5">
 			<div className=" h-100 w-100">
 				<SessionYogaDetailsCard
 					id={store.singleYogaSessionInfo.id}

@@ -21,7 +21,7 @@ export const UserProfile = (email, password) => {
 	}, [])
 	
 	return (
-		<div className="container-fluid pt-4">
+		<div className="container-fluid pt-4 backgroundWaves w-100">
 			<UserProfileCard 
 			user={store.user}
 			/>

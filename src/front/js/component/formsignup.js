@@ -21,17 +21,11 @@ export const FormSignup = () => {
     async function handleFormSignup(e) {
         e.preventDefault()
         let logged = ""
-        // console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-        // if (freeTrial) {
         logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        // } else {
-        //     logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        // }
-        // console.log(logged)
         if (logged) {
             navigate("/paymentdetails")
         } else {
-            toast.error("Error while creating the account");
+            toast.error("User unsubscribed. Contact oceanom@gmail.com to resume the account.");
         }
     }
 
@@ -40,10 +34,10 @@ export const FormSignup = () => {
             <ToastContainer />
             <form className="stylebackgroundimg container-fluid d-flex me-0 mt-5 flex-column mb-5 w-100 opacity-50 ms-sm-1 ms-md-0 text-center pt-5" onSubmit={handleFormSignup}>
                 <h1 className="poiret-one-regular fs-1">New Practitioner</h1>
-                <div className="row justify-content-center">
-                    <div className="col-11 col-sm-6 col-lg-4 ">
+                <div className="d-flex row justify-content-center">
+                    <div className="col-11 col-sm-6 col-lg-4">
                         <div className="card-body">
-                            <div className=" text-start">
+                            <div className="mt-1 text-start">
                                 <label htmlFor="exampleInputEmail1" className="form-label mt-3">Your beautiful first name</label>
                                 <input type="name" className="form-control" id="exampleInputName1" aria-describedby="emailHelp" onChange={(e) => setName(e.target.value)} />
                             </div>

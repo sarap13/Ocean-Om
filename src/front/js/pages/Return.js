@@ -52,8 +52,8 @@ export function Return() {
     // si el pago esta completo devuelve este componente
     if (status === "complete") {
         return (
-            <div id="success" className="container-fluid backgroundImage mt-3 pt-3">
-                <div className='d-flex flex-column justify-content-center align-items-center text-secondary mt-5'>
+            <div id="success" className="container-fluid backgroundImage mt-3 pt-3 opacity-75">
+                <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
                     <div className="d-block text-center col-md-6 col-sm-12 col-md-8 col-lg-6 pt-5 mt-5">
                         <h6 className="poiret-one-regular mt-5">Your payment has been processed!</h6>
                         <h6 className="poiret-one-regular">Your subscription will be charged monthly</h6>
@@ -64,7 +64,7 @@ export function Return() {
 
                     <div className="mt-5 mb-5">
                         <Link to="/login">
-                            <button type="button" className="btn btn-outline-secondary poiret-one-regular fs-5">Click here to login</button>
+                            <button type="button" className="btn btn-outline-secondary text-dark poiret-one-regular fs-5">Click here to login</button>
                         </Link>
                     </div>
 

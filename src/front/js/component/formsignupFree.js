@@ -26,24 +26,18 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         // actions.signupFree();
         e.preventDefault()
         let logged = ""
-        // console.log(name, lastname, date_of_birth, email, password, confirmPassword);
-        // if (freeTrial) {
         logged = await actions.signupFree(name, lastname, date_of_birth, email, password, confirmPassword);
-        // } else {
-        //     logged = await actions.signup(name, lastname, date_of_birth, email, password, confirmPassword);
-        // }
-        // console.log(logged)
         if (logged) {
             navigate("/paymentdetails")
         } else {
-            toast.error("Error while creating the account");
+            toast.error("User unsubscribed. Contact oceanom@gmail.com to resume the account.");
         }
     }
 
     return (
         <>
             <ToastContainer />
-            <form className="stylebackgroundimg container d-flex  mt-3 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
+            <form className="stylebackgroundimg container-fluid d-flex me-0 mt-3 flex-column mb-5 w-100 h-100 opacity-50 ms-sm-1 ms-md-0 text-center pt-5" onSubmit={handleFormSignupFreeTrial}>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4">
@@ -66,22 +60,20 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="d-flex flex-column mt-5 align-items-center col-11 col-sm-6 col-lg-4">
-                        <div className="card-body mt-5 text-start d-flex flex-column justify-content-center my-auto">
+                    <div className="d-flex flex-column align-items-center col-11 col-sm-6 col-lg-4">
+                        <div className="card-body mt-md-4 mt-sm-0 text-start d-flex flex-column justify-content-center my-auto">
                             <label htmlFor="exampleInputPassword1" className="form-label mt-3">A password you would always remember</label>
                             <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
                             <label htmlFor="exampleInputConfirmPassword1" className="form-label mt-3">Again, just in case</label>
                             <input type="password" className="form-control" id="exampleInputConfirmPassword1" onChange={(e) => setConfirmPassword(e.target.value)} />
-                            {/* <Link to="/paymentdetails"> */}
                             <button type="submit" className="btn btn-outline-secondary w-50 mt-5" onClick={handleFormSignupFreeTrial}>Sign Up</button>
-                            {/* </Link> */}
                         </div>
                     </div>
                 </div>
-
-                <h1 className="poiret-one-regular mt-3">Enjoy our exclusive content for 3 days!</h1>
-                <p>After those days your monthly subcription you'll be charged</p>
-
+                <div className="pb-3 mt-1">
+                    <h1 className="poiret-one-regular">Enjoy our exclusive content for 3 days!</h1>
+                    <p>After those days your monthly subscription will be charged</p>
+                </div>
             </form>
         </>
     );

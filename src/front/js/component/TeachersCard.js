@@ -16,19 +16,13 @@ export const TeachersCard = (props) => {
 
 
 	return (
-		<div className="card mx-0 pl-0" style={{ width: "14rem", height: "28rem" }}>
-			
-				<img src={props.url_imagen} id="styleImageCard" className="card-img-top" alt="..." />
-			
+		<div className="card mx-auto pl-0 border border-0 opacity-75" style={{ width: "14rem", height: "28rem", backgroundColor: "transparent" }}>
+			<img src={props.url_imagen} id="styleImageCard" className="card-img-top" alt="..." />
 			<div className="card-body mt-1">
-				<h5 className="card-title">{props.name} {props.last_name}</h5>
-				<hr className="border" />
-
-				<span className="card-title"><strong>Currently living in:</strong>  {props.residence}</span><br></br>
-                <span className="card-title"><strong>Biography:</strong>  {props.biografy}</span><br></br>
-				 
+				<h5 className="card-title mb-3 poiret-one-regular fw-bold fs-4">{props.name} {props.last_name}</h5>
+				<span className="card-title fw-light"><strong>Currently living in:</strong>  {props.residence}</span><br></br>
+				<span className="card-title fw-light"><strong>Biography:</strong>  {props.biografy}</span><br></br>
 			</div>
-
 		</div>
 	);
 };

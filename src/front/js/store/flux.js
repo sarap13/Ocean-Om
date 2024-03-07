@@ -207,9 +207,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "GET",
 					});
 					let data = await response.json();
-					// console.log(yogatype, yogatype_Id);
-					// console.log(response.status);
-					// console.log(data)
+					console.log(yogatype, yogatype_Id);
 					if (response.status === 200) {
 						if (yogatype == 'jivamuktiyoga') {
 							setStore({ singleYogaSessionInfo: data.jivamukti_session })
@@ -390,12 +388,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-			
-
-
-			
-
 
 		}
 	}

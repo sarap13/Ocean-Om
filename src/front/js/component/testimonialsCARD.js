@@ -21,18 +21,15 @@ export const Testimony = (props) => {
     
 
     return (
-        <div className="card shadow p-3 mb-5 bg-body-tertiary roundedcol col-lg-3 m-3" style={{ width: "14rem", height: "15rem" }}>
-			
+        <div className="card shadow p-3 bg-body-tertiary rounded col-lg-3" style={{ width: "14rem", height: "15rem" }}>
             <div className="card-body mt-1">
-                <h3 className="card-title">{props.title}</h3>
+                <h3 className="card-title text-secondary">{props.title}</h3>
                 <hr className="border" />
 
-                <span className="card-title">{props.description}</span><br></br>
+                <span className="card-title text-secondary">{props.description}</span><br></br>
                 <hr className="border" />
-                <span className="card-title">{formattedDate}</span>
-         
+                <span className="card-title text-secondary">{formattedDate}</span>
             </div>
-
         </div>
     );
 };
@@ -57,7 +54,3 @@ date: PropTypes.string
 * your component's properties
 **/
 
-
-
-
-{/* <div className="card shadow p-3 mb-5 bg-body-tertiary roundedcol col-lg-3 m-3" > */}

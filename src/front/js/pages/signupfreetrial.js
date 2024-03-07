@@ -9,7 +9,7 @@ export const SignupFreeTrial = (email, password) => {
 
 	console.log(email, password);
 	return (
-		<div className="vh-100 mt-5 pt-5">
+		<div className="vh-100 mt-5 pt-2 backgroundWaves mx-0">
 			<FormSignupFreeTrial freeTrial = {true}/>
 		</div>
 	);

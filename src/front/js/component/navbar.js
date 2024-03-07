@@ -21,9 +21,8 @@ export const Navbar = () => {
             {location.pathname !== "/" && (
                 <nav
                     id="navbar"
-                    className="navbar navbar-expand-lg navbar-dark fixed-top mb-2 z-n1"
-                    style={{ backgroundColor: "#1D77AB" }}>
-                    <div className="container mt-1 col-lg-12 col-md-6 col-sm-6">
+                    className="navbar navbar-expand-lg navbar-dark fixed-top mb-5 z-n1 colorNavyFoot">
+                    <div className="container mt-1 col-lg-12 col-md-6 col-sm-6 ms-1">
                         <Link to="/">
                             <img src={logo} className="card-img-top" alt="..." style={{ width: "50%" }} />
                         </Link>
@@ -46,14 +45,14 @@ export const Navbar = () => {
                             <div className="collapse navbar-collapse">
                                 <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-end">
                                     <li className="nav-item">
-                                        <Link to="/sessions">
+                                        <Link to="/sessions" className=" text-decoration-none">
                                             <span className="nav-link active text-light" aria-current="page">
                                                 Sessions
                                             </span>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="/theteachers">
+                                        <Link to="/theteachers" className=" text-decoration-none">
                                             <span className="nav-link text-light">The Teachers</span>
                                         </Link>
                                     </li>
@@ -63,13 +62,13 @@ export const Navbar = () => {
                                         // añadimos <> para poder meter los dos li sin necesidad de añadir un div
                                         <>
                                             <li className="nav-item">
-                                                <Link to="/signup">
+                                                <Link to="/signup" className=" text-decoration-none">
                                                     <span className="nav-link text-light">Signup</span>
                                                 </Link>
                                             </li>
 
                                             <li className="nav-item">
-                                                <Link to="/signup/freetrial">
+                                                <Link to="/signup/freetrial" className=" text-decoration-none">
                                                     <span className="nav-link text-light">Free trial</span>
                                                 </Link>
                                             </li>
@@ -88,7 +87,7 @@ export const Navbar = () => {
                                     ) : (
                                         // Si el usuario no está logeado, mostrar opciones de inicio de sesión
                                         <li className="nav-item">
-                                            <Link to="/login">
+                                            <Link to="/login" className=" text-decoration-none">
                                                 <span className="nav-link text-light">Login</span>
                                             </Link>
                                         </li>

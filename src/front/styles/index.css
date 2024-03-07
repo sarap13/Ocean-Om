@@ -4,17 +4,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
 .background-img {
-    opacity: 70%;
-    padding: 20px 20px 20px 20px;
+  opacity: 70%;
+  padding: 20px 20px 20px 20px;
 }
 
 .poiret-one-regular {
-    font-family: "Poiret One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: "Poiret One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .poiret-one-regular {
-    font-family: "Poiret One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: "Poiret One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.stylebackgroundColorBeige {
+  background-color: #f3e9e9;
+  /* background-image: url("https://img.freepik.com/vector-gratis/copia-espacio-fondo-blanco-ondulado_23-2148845471.jpg?size=626&ext=jpg&ga=GA1.1.1488620777.1708041600&semt=ais"); */
+      /* background-color: rgba(255, 254, 254, 0.8); */
+    background-repeat: no-repeat;
+    background-size: cover; /* Ajusta el tamaño de la imagen según sea necesario */
+    background-position: center; /* Centra la imagen */
+}
+
+.backgroundWaves {
+  background-image: url("https://static.vecteezy.com/system/resources/previews/005/554/734/non_2x/white-background-abstract-with-modern-design-gray-free-vector.jpg");
+  background-color: rgba(255, 254, 254, 0.8);
+  background-repeat: no-repeat;
+  background-size: cover; /* Ajusta el tamaño de la imagen según sea necesario */
+  background-position: center; /* Centra la imagen */
+}
+
+.colorNavyFoot {
+  background-color: #1D77AB;
+}

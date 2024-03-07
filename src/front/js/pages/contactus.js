@@ -14,7 +14,7 @@ export const ContactUs = () => {
 
 
 	return (
-		<div className="container-fluid mt-5 pt-5">
+		<div className="container-fluid mt-5 pt-5 backgroundWaves">
 			<FormCONTACT />
 		</div>
 	);

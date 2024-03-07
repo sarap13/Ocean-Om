@@ -45,24 +45,16 @@ export const Home = () => {
 				</div>
 				{/* Botones en línea para pantallas medianas y grandes */}
 				<div className="d-none d-sm-none d-md-flex justify-content-end gap-3">
-					{/* <Link to="/signup">
-						<button type="button" className="btn btn-outline-light btn-lg">Signup</button>
-					</Link> */}
 					<Link to="/signup/freetrial">
 						<button type="button" className="btn btn-outline-light btn-lg">Free Trial</button>
 					</Link>
 					<Link to="/contactus">
 						<button type="button" className="btn btn-outline-light btn-lg p-2 mx-2">Contact Us</button>
 					</Link>
-					{/* <Link to="/testimonials">
-						<button type="button" className="btn btn-outline-light btn-lg p-2 mx-2">Testimonials</button>
-					</Link> */}
 					<Link to="/login">
 						<button type="button" className="btn btn-outline-light btn-lg">Login</button>
 					</Link>
 				</div>
-
-				{/* </div> */}
 
 				<div className="mt-4 ms-2 col-lg-12 col-md-12 col-sm-12">
 					<img src={logo} className="card-img-top p-0" alt="..." style={{ width: "50%" }} />
@@ -71,11 +63,11 @@ export const Home = () => {
 
 				<div className="d-block ms-4 text-start col-lg-12 col-md-6 col-sm-6">
 					<span className="text-light fs-5 text-center mt-1">
-						Come and practice in this ocean of online yoga <br></br> classes. 
+						Come and practice in this ocean of online yoga <br></br> classes.
 						With teachers from all over the globe!
 						<br></br>
-				
-						Enjoy exclusive content of yoga, meditation, <br></br> and harmonium practices. 
+
+						Enjoy exclusive content of yoga, meditation, <br></br> and harmonium practices.
 						Any style, at any time.
 					</span>
 					<div className="d-flex align-items-center justify-content-start mt-5">

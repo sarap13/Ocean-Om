@@ -33,16 +33,13 @@ export const UserProfileCard = props => {
     }
 
     return (
-        <div className="container-fluid mt-5 card d-flex flex-column justify-content-center h-100 align-items-center opacity-50 p-5">
+        <div className="container-fluid mt-5 card d-flex flex-column justify-content-center align-items-center opacity-50 p-5">
 
             <div className="card-body text-center row">
                 <img src="https://149355309.v2.pressablecdn.com/wp-content/uploads/2015/03/216620548197708192.jpg" className="card-img-top w-25 rounded mx-auto d-block rounded-circle" alt="..." />
-
                 <h5 className="card-title mt-4">{props.user.name} {props.user.last_name}</h5>
                 <h6 className="card-text">{props.user.email}</h6>
                 <h6 className="fs-6 fst-italic">Member from {props.user.subscription_start_date}</h6>
-
-
             </div>
             <p className="col-md-8 text-center mb-0">¡Namaste! Bienvenido a tu espacio de bienestar.</p>
             <p className="col-md-6 text-center lh-sm fst-italic">¡Gracias por disfrutar en un viaje de yoga, meditación y armonía con nosotros.</p>
@@ -62,7 +59,6 @@ export const UserProfileCard = props => {
             <button type="button" id="liveAlertBtn" className={`${styleHoverUnsubscribeButton} mt-5 btn align-self-md-start align-self-sm-center`} onMouseEnter={() => setStyleHoverUnsubscribeButton("text-primary")}
                 onMouseLeave={() => setStyleHoverUnsubscribeButton("text-secondary")} onClick={handleClickUnsubscribe}>Unsubscribe</button>
 
-            {/* <ToastContainer /> */}
         </div>
     );
 };

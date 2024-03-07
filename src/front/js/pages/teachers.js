@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { TeachersCard } from "../component/TeachersCard.js";
-import "../../styles/teachers.css";
+import "../../styles/index.css";
 
 
 import imagenClases from "../../img/fotonavacerrada.jpeg"
@@ -28,15 +28,15 @@ export const Teachers = () => {
 	return (
    
 
-		<div className="container-fluid mt-2 pt-5 text-center">
+		<div className="container-fluid mt-2 pt-5 text-center backgroundWaves">
 		<div className="d-flex justify-content-center mt-5 pt-5">   
-			<h1 className="poiret-one-regular">The Teachers</h1>
+			<h1 className="poiret-one-regular opacity-75">The Teachers</h1>
 		</div> 
 	
-		<div className="container mt-2 d-flex justify-content-center">
-			<div className="row">
+		<div className="container mt-2" >
+			<div className="row justify-content-center">
 				{store.teachers.map(item => (
-					<div className="col-lg-4 col-md-4 col-sm-4 mb-4 mt-2 me-3" key={item.id}>
+					<div className="col-lg-4 col-md-4 col-sm-4 col-sm-12 mb-4 mt-2 align-self-center" key={item.id}>
 						<TeachersCard 
 							id={item.id}
 							name={item.name}

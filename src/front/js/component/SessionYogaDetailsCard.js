@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter, useParams } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import "../../styles/singleDetails.css";
+import "../../styles/index.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,17 +18,20 @@ export const SessionYogaDetailsCard = props => {
     const params = useParams();
     // console.log(params)
 
-    const [styleStartNow, setStyleStartNow] = useState("btn-light");
+    const [styleButton, setStyleButton] = useState("btn-outline-secondary");
     const isLoggedIn = store.loggedUser !== null; //creamos const para saber si el user esta logeado
-
+    const [isHoveredButton, setIsHoveredButton] = useState(false);
+    const [isHoveredLink, setIsHoveredLink] = useState(false);
 
     // boton Dive into the lesson now! que cuando haya hover se ponga el texto blanco
     const handleHoverInButton = () => {
-        setStyleStartNow("btn-outline-white text-dark");
+        setIsHoveredButton(true);
+        setStyleButton("btn-primary");
     }
     // al quitar el hover vuelva al texto en azul
     const handleHoverOutButton = () => {
-        setStyleStartNow("btn-light");
+        setIsHoveredButton(false);
+        setStyleButton("btn-outline-secondary");
     };
 
     // funcion para cuando le demos click al botón dive to the session nos reenvie a youtube!
@@ -42,7 +45,7 @@ export const SessionYogaDetailsCard = props => {
         <>
             <div className=" d-flex justify-content-center mt-5 pt-md-5 pt-sm-2 ms-md-4 me-md-4 me-sm-2 " >
                 <div className="row g-0">
-                    <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center align-items-start py-3 ms-md-5 ms-sm-4 ps-md-3">
+                    <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center align-items-start py-4 ms-md-5 ms-sm-4 ps-md-3">
                         <div className="col-md-6 col-sm-6 d-flex align-items-center">
                             <h6 className="fs-1 mb-1 poiret-one-regular text-wrap">{props.name}</h6>
                         </div>
@@ -69,21 +72,19 @@ export const SessionYogaDetailsCard = props => {
                             <h6 className="">Level : </h6>
                             <h6 className="ms-2">{props.level}</h6>
                         </div>
-                        <div className="d-flex flex-row gap-5">
-                            <button type="button" onClick={handleClickButton} className={`Name="btn btn-sm p-3 mt-4 btn-outline-ligth bg-transparent border-none d-flex align-items-start`} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
-                                {/* <Link className={`btn  `} to={"/"}> */}
-                                Dive into the lesson now!
-                                {/* </Link> */}
-                            </button>
-                            <button type="button" className={`Name="btn btn-sm p-1 mt-4 btn-outline-light border-none bg-transparent d-flex align-items-start `} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
-                                <Link className={`btn text-dark `} to="/sessions">
-                                    Back
-                                </Link>
-                            </button>
-                        </div>
                     </div>
                     <div className="col-md-6 col-sm-12 d-flex flex-column justify-content-md-center justify-content-sm-center align-items-md-end align-items-sm-center ">
                         <img className="col-11 img-fluid w-75 rounded" src={props.url_imagen}></img>
+                    </div>
+                    <div className="d-flex flex-row gap-5 ms-md-5">
+                        <button type="button" onClick={handleClickButton} className={`btn ${styleButton} ${isHoveredButton ? "text-white" : "text-secondary"} gap-3 mt-4 rounded d-flex align-items-center opacity-75`} onMouseEnter={handleHoverInButton} onMouseLeave={handleHoverOutButton}>
+                            Dive into the lesson now!
+                        </button>
+                        <button type="button" className={`btn ${isHoveredLink ? "btn-primary text-white" : "btn-outline-secondary "} gap-3 mt-4 rounded d-flex align-items-center opacity-75 p-2`} onMouseEnter={() => setIsHoveredLink(true)} onMouseLeave={() => setIsHoveredLink(false)}>
+                            <Link className={`${isHoveredLink ? "text-white" : "text-secondary"} text-decoration-none`} to="/sessions">
+                                Back
+                            </Link>
+                        </button>
                     </div>
                 </div>
             </div>

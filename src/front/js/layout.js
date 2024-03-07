@@ -5,7 +5,6 @@ import { BackendURL } from "./component/backendURL";
 import { Context } from "./store/appContext";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { SingleHathaYogaDetails } from "./pages/SingleHathaYogaDetails.js";
 import { SessionYogaDetails } from "./pages/SessionYogaDetails.js";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
@@ -24,6 +23,7 @@ import { Footer } from "./component/footer";
 import { Testimonials } from "./pages/testimonial";
 import { SignupFreeTrial } from "./pages/signupfreetrial";
 import CheckoutForm from "./component/checkoutForm.js";
+import { ThankYouTestimonials } from "./pages/thankyou testimonial.js";
 
 //create your first component
 const Layout = () => {
@@ -40,12 +40,10 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
-                        {/* <Route element={<SingleMeditationDetails />} path="/meditation/:theid" /> */}
-                        {/* <Route element={<SingleMeditationDetails />} path="/harmonium/:theid" /> */}
-                        <Route path="/hathayoga/:theid" element={<SingleHathaYogaDetails />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/paymentdetails" element={<CheckoutForm />} />
                         <Route path="/testimonials" element={<Testimonials />} />
+                        <Route path="/thankyoutestimonial" element={<ThankYouTestimonials />} />
                         <Route path="/profile" element={<UserProfile />} />
                         <Route path="/sessions" element={<Sessions />} />
                         <Route path="/theteachers" element={<Teachers />} />
@@ -54,12 +52,9 @@ const Layout = () => {
                         <Route path="/thankyou" element={<ThankYou />} />
                         <Route path="/forgotpassword" element={<ForgotPass />} />
                         <Route path="/checkyourinbox" element={<CheckInbox />} />
-                        {/* <Route path="/jivamuktiyoga/:theid" element={<SingleJivamutkiYogaDetails />} /> */}
-                        {/* <Route path="/vinyasayoga/:theid" element={<SingleVinyasaYogaDetails />} /> */}
                         <Route path="/:yogatype/:theid" element={<SessionYogaDetails />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/signup/freetrial" element={<SignupFreeTrial />} />
-                        {/* <Route path="/success" element={<PaymentSuccess />} /> */}
                         <Route path="/return" element={<Return />} />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

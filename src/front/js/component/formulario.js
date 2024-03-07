@@ -32,7 +32,7 @@ export const Formulario = () => {
             toast.error("Invalid email or password");
         }
         if (logged === 403) {
-            toast.error("User not subscribed");
+            toast.error("User unsubscribed. Contact oceanom@gmail.com to resume the account.");
         }
     }
 
