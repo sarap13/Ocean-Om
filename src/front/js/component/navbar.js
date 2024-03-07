@@ -23,7 +23,7 @@ export const Navbar = () => {
                     id="navbar"
                     className="navbar navbar-expand-lg navbar-dark fixed-top mb-2 z-n1"
                     style={{ backgroundColor: "#1D77AB" }}>
-                    <div className="container mt-1 ms-2 col-lg-12 col-md-6 col-sm-6">
+                    <div className="container mt-1 col-lg-12 col-md-6 col-sm-6">
                         <Link to="/">
                             <img src={logo} className="card-img-top" alt="..." style={{ width: "50%" }} />
                         </Link>
@@ -44,7 +44,7 @@ export const Navbar = () => {
                                 </div>
                             </div>
                             <div className="collapse navbar-collapse">
-                                <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-start">
+                                <ul className="nav col-lg-12 col-md-12 col-sm-12 d-flex flex-md-row flex-column align-items-end">
                                     <li className="nav-item">
                                         <Link to="/sessions">
                                             <span className="nav-link active text-light" aria-current="page">
@@ -57,11 +57,7 @@ export const Navbar = () => {
                                             <span className="nav-link text-light">The Teachers</span>
                                         </Link>
                                     </li>
-                                    {/* <li className="nav-item">
-                                    <Link to="/">
-                                    <span className="nav-link text-light">Log In</span>
-                                    </Link>
-                                </li> */}
+
                                     {/* Si el usuario no esta logeado, aparecerán estos links */}
                                     {!isLoggedIn ? (
                                         // añadimos <> para poder meter los dos li sin necesidad de añadir un div

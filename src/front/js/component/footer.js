@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => (
-	<footer className="footer mx-auto mb-0 py-3 text-center" style={{ backgroundColor: "#1D77AB" }}>
+	<footer className="footer mx-auto mb-0 d-flex py-3 text-center vh-25 w-100 z-n1 position-absolute" style={{ backgroundColor: "#1D77AB" }}>
 		<div className="container">
 			<div className="row justify-content-center">
 				<div className="col-lg-3 col-md-6">

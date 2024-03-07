@@ -44,7 +44,6 @@ export const FormSignupFreeTrial = ({ freeTrial }) => {
         <>
             <ToastContainer />
             <form className="stylebackgroundimg container d-flex  mt-3 flex-column h-100 opacity-50 ms-5 text-center " onSubmit={handleFormSignupFreeTrial}>
-                <h1 className="poiret-one-regular fs-6">First Step</h1>
                 <h1 className="poiret-one-regular fs-1">Free Trial</h1>
                 <div className="d-flex justify-content-center">
                     <div className="col-11 col-sm-6 col-lg-4">

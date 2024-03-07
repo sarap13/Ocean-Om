@@ -67,9 +67,15 @@ export const Formulario = () => {
                         <p className="mb-2">Follow us on</p>
                     </div>
                     <div>
-                        <i className="fa-brands fa-xl fa-twitter m-1 " style={{ color: "#9b9d85" }}></i>
-                        <i className="fa-brands fa-xl fa-instagram m-1" style={{ color: "#9b9d85" }}></i>
-                        <i className="fa-brands fa-xl fa-facebook m-1" style={{ color: "#9b9d85" }}></i>
+                        <a href="https://twitter.com/oceanom" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                            <i className="fab fa-twitter fa-xl m-1" style={{ color: "#9b9d85" }}></i>
+                        </a>
+                        <a href="https://www.instagram.com/oceanom" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                            <i className="fab fa-instagram fa-xl m-1" style={{ color: "#9b9d85" }}></i>
+                        </a>
+                        <a href="https://www.facebook.com/ocean_om" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                            <i className="fab fa-facebook fa-xl m-1" style={{ color: "#9b9d85" }}></i>
+                        </a>
                     </div>
                 </div>
             </form>
