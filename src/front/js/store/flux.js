@@ -319,27 +319,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(store.loggedUser)
             },
 			resetPassword: async (email) => {
-			
-				try {
-					const response = await fetch(process.env.BACKEND_URL + "/reset-password", {
-					   method: 'PUT',
-					   headers: {
-						  'Content-Type': 'application/json',
-					   },
-					   body: JSON.stringify({ email }),
-					});
-			  
-					if (response.ok) {
-					   return { success: true, message: 'Password reset successful. Check your email for the new password.' };
-					} else {
-					   const data = await response.json();
-					   console.error('Error response from server:', data);
-					   return { success: false, message: 'Error: User not found' };
-					}
-				 } catch (error) {
-					// console.error('Error:', error);
-					return { success: false, message: `An unexpected error occurred.` };
-				 }
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/reset-password", {
+                       method: 'PUT',
+                       headers: {
+                          'Content-Type': 'application/json',
+                       },
+                       body: JSON.stringify({ email }),
+                    });
+                    if (response.ok) {
+                       return { success: true, message: 'Password reset successful. Check your email for the new password.' };
+                    } else {
+                       const data = await response.json();
+                       console.error('Error response from server:', data);
+                       return { success: false, message: 'Error: User not found' };
+                    }
+                 } catch (error) {
+                    // console.error('Error:', error);
+                    return { success: false, message: `An unexpected error occurred.` };
+                 }
             },
 
 			testimonials: async (title, description, date) => {

@@ -28,7 +28,7 @@ export const AboutUs = () => {
 	return (
    
 
-		<div className="container-fluid mt-5 pt-5 text-center">
+		<div className="backgroundWaves container-fluid mt-5 pt-5 text-center min-vh-100">
 		<div className="d-flex justify-content-center mt-4 pt-4">   
 			<h1 className="poiret-one-regular fontaboutus">About Us</h1>
 		</div> 
@@ -45,7 +45,7 @@ export const AboutUs = () => {
 
 			<div className="col-lg-12 col-md-12 col-sm-12 mb-4 mt-4">
 				<Link to="/sessions">
-				<button className="btn btn-outline-secondary">Back to home</button>
+				<button className="btn btn-outline-secondary">Back to sessions</button>
 				</Link>
 			</div>
 		</div>

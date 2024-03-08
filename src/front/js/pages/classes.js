@@ -63,10 +63,10 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Jivamukti Yoga</span>
+					<span className="ms-2 poiret-one-regular fs-5">Jivamukti Yoga</span>
 				</div>
 				<div>
-					<p className="mx-3 fw-light lh-2 mt-1">Las clases de Jivamukti Yoga suelen incluir la práctica física de asanas (posturas), pranayama (control de la respiración), canto de mantras, meditación y exploración de los principios éticos y filosóficos del yoga. El enfoque se centra en la conexión con el aspecto espiritual del yoga y la integración de principios éticos en la vida diaria. El activismo y la conciencia ambiental también son aspectos importantes de su filosofía.</p>
+					<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">Jivamukti Yoga classes typically include the physical practice of asanas (postures), pranayama (breath control), chanting of mantras, meditation, and exploration of the ethical and philosophical principles of yoga. The focus is on connecting with the spiritual aspect of yoga and integrating ethical principles into daily life. Activism and environmental awareness are also important aspects of its philosophy.</p>
 				</div>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
@@ -91,10 +91,10 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Vinyasa Yoga</span>
+					<span className="ms-2 poiret-one-regular fs-5">Vinyasa Yoga</span>
 				</div>
 				<div>
-					<p className="mx-3 fw-light lh-2 mt-1">El Vinyasa Yoga es un estilo de yoga dinámico que enfatiza la conexión entre el movimiento y la respiración. Las posturas fluyen en una secuencia continua, mejorando la fuerza, la flexibilidad y la conciencia respiratoria. Este estilo busca integrar mente y cuerpo a través de una práctica fluida y meditativa.</p>
+					<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">Vinyasa Yoga is a dynamic style of yoga that emphasizes the connection between movement and breath. Poses flow in a continuous sequence, enhancing strength, flexibility, and breath awareness. This style aims to integrate mind and body through a fluid and meditative practice.</p>
 				</div>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
@@ -119,10 +119,10 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Rocket Yoga</span>
+					<span className="ms-2 poiret-one-regular fs-5">Rocket Yoga</span>
 				</div>
 				<div>
-					<p className="mx-3 fw-light lh-3 mt-1">Rocket Yoga: Versión dinámica de Ashtanga Yoga, con movimientos rápidos y creatividad. Desarrollada por Larry Schultz, enfatiza libertad en la práctica para equilibrar fuerza y flexibilidad.</p>
+					<p className="mx-3 fw-light lh-3 mt-1 poiret-one-regular">Rocket Yoga is a dynamic version of Ashtanga Yoga, featuring fast-paced movements and creativity. Developed by Larry Schultz, it emphasizes freedom in the practice to balance strength and flexibility.</p>
 				</div>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
@@ -147,10 +147,10 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Asthanga Yoga</span>
+					<span className="ms-2 poiret-one-regular fs-5">Asthanga Yoga</span>
 				</div>
 				<div>
-					<p className="mx-3 fw-light lh-2 mt-1">El Ashtanga Yoga es un estilo de yoga que sigue una secuencia predefinida de posturas, combinando movimiento fluido con respiración consciente. Se centra en la sincronización de la respiración y el movimiento, así como en la práctica progresiva de series específicas de asanas. Este enfoque sistemático promueve la fuerza, la flexibilidad y la purificación interna.</p>
+					<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">Ashtanga Yoga is a style of yoga that follows a predefined sequence of poses, combining fluid movement with conscious breathing. It focuses on synchronizing breath and movement, as well as the progressive practice of specific series of asanas. This systematic approach promotes strength, flexibility, and internal purification.</p>
 				</div>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
@@ -175,10 +175,10 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Hatha Yoga</span>
+					<span className="ms-2 poiret-one-regular fs-5">Hatha Yoga</span>
 				</div>
 				<div>
-					<p className="mx-3 fw-light lh-2 mt-1">Hatha Yoga es una forma tradicional de yoga que se centra en la unión de las posturas físicas (asanas) y las técnicas de respiración (pranayama). Esta práctica busca equilibrar el cuerpo y la mente, promoviendo la conexión entre la actividad física, la respiración y la meditación. Hatha Yoga es conocido por su enfoque en la alineación, fuerza y ​​flexibilidad, y es adecuado para practicantes de todos los niveles.</p>
+					<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">Hatha Yoga is a traditional form of yoga that focuses on the union of physical postures (asanas) and breathing techniques (pranayama). This practice aims to balance the body and mind, promoting the connection between physical activity, breath, and meditation. Hatha Yoga is known for its emphasis on alignment, strength, and flexibility, and it is suitable for practitioners of all levels.</p>
 				</div>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
@@ -203,9 +203,9 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Meditations</span>
+					<span className="ms-2 poiret-one-regular fs-5">Meditations</span>
 				</div>
-				<p className="mx-3 fw-light lh-2 mt-1">Una sesión de meditación es una práctica guiada o individual que tiene como objetivo alcanzar un estado de atención plena y calma mental.</p>
+				<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">A meditation session is a guided or individual practice aimed at achieving a state of mindfulness and mental calmness.</p>
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">
 						{store.meditation.map(item => (
@@ -229,9 +229,9 @@ export const Sessions = () => {
 			<div className="container-fluid mt-3">
 				<div className="ms-3 d-flex align-items-center">
 					<i className="fa-solid fa-star fa-xl" style={{ color: "#74C0FC" }}></i>
-					<span className="ms-2">Harmonium</span>
+					<span className="ms-2 poiret-one-regular fs-5">Harmonium</span>
 				</div>
-				<p className="mx-3 fw-light lh-2 mt-1">Una sesión de harmonium es una experiencia musical y espiritual en la que el practicante toca este instrumento de fuelle, creando melodías armoniosas. A menudo asociada con prácticas devocionales como el kirtan, la sesión implica cantar junto con el harmonium, fomentando la conexión espiritual a través de la música y la expresión emocional. Durante la sesión, los participantes pueden explorar improvisaciones, canciones tradicionales y ritmos, sumergiéndose en una experiencia sonora única y significativa.</p>
+				<p className="mx-3 fw-light lh-2 mt-1 poiret-one-regular">A harmonium session is a musical and spiritual experience where the instructor plays this bellows instrument, creating harmonious melodies. Often associated with devotional practices like kirtan, the session involves singing along with the harmonium, fostering spiritual connection through music and emotional expression. Participants may explore improvisations, traditional songs, and rhythms during the session, immersing themselves in a unique and meaningful sonic experience.</p>
 
 				<div className="container-fluid d-flex flex-row">
 					<ul className="d-flex flex-nowrap flex-row overflow-scroll gap-3 px-0 mx-2">

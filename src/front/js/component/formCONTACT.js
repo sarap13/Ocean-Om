@@ -13,7 +13,7 @@ export const FormCONTACT = () => {
     });
 
     // activamos el useNavigate
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const { store, actions } = useContext(Context)
 
@@ -27,7 +27,7 @@ export const FormCONTACT = () => {
         let logged = await actions.contactus(email, name, message);
         console.log(logged)
         // if (logged) { //true
-        //     navigate("/");
+        navigate("/thankyou");
         // } else {
         //     toast.error("Invalid email or password");
         // }
@@ -37,7 +37,7 @@ export const FormCONTACT = () => {
     return (
 
 
-        <form className="stylebackgrounding container mt-5 mb-3 py-5">
+        <form className="stylebackgrounding container mt-4 py-5">
             <div className="row justify-content-center align-items-center">
                 <div className="col-lg-6 col-md-6 col-sm-12 mb-5">
                     <h1 className="poiret-one-regular text-secondary">Contact Us</h1>
@@ -84,11 +84,11 @@ export const FormCONTACT = () => {
                         <label className="form-label poiret-one-regular">How can we help you?</label>
                         <textarea className="form-control inputComment" onChange={(e) => setMessage(e.target.value)}></textarea>
                     </div>
-                    <Link to="/thankyou">
-                        <button type="submit" className="btn btn-outline-secondary w-100 mt-3 poiret-one-regular fs-5" onClick={handleContact}>
+                   
+                    <button type="submit" className="btn btn-outline-secondary mt-3 poiret-one-regular fs-5" onClick={handleContact}>
                             Send
-                        </button>
-                    </Link>
+                    </button>
+                    
                 </div>
 
             </div>

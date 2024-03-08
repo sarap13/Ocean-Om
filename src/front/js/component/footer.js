@@ -9,7 +9,7 @@ export const Footer = () => {
 
 	<>
 	{location.pathname !== "/" && (
-		<footer className="footer mx-auto mb-0 d-flex py-3 text-center vh-25 w-100 z-n1 position-absolute colorNavyFoot">
+	<footer className="footer mx-auto mb-0 py-3 text-center text-light position-absolute w-100 colorNavyFoot" style={{ zIndex: 2 }}>
 		<div className="container">
 			<div className="row justify-content-center">
 				<div className="col-lg-3 col-md-6">

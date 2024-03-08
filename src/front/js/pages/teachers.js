@@ -28,7 +28,7 @@ export const Teachers = () => {
 	return (
    
 
-		<div className="container-fluid mt-2 pt-5 text-center backgroundWaves">
+		<div className="container-fluid mt-2 pt-5 text-center backgroundWaves min-vh-100">
 		<div className="d-flex justify-content-center mt-5 pt-5">   
 			<h1 className="poiret-one-regular opacity-75">The Teachers</h1>
 		</div> 
@@ -50,7 +50,7 @@ export const Teachers = () => {
 
 			<div className="col-lg-12 col-md-12 col-sm-12 mb-4 mt-2">
 				<Link to="/sessions">
-				<button className="btn btn-outline-secondary">Back to home</button>
+				<button className="btn btn-outline-secondary">Back to sessions</button>
 				</Link>
 			</div>
 			</div>

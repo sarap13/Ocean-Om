@@ -20,7 +20,7 @@ export const ThankYou = () => {
     
 
 
-        <div className="container stylebackgrounding d-flex flex-column justify-content-center align-items-center text-secondary mt-5 pt-5">
+        <div className="backgroundWaves container-fluid d-flex flex-column justify-content-center align-items-center text-secondary mt-5 pt-5 min-vh-100">
         <div className="d-block text-center col-12 col-sm-12 col-md-8 col-lg-6 pt-5 mt-5">
             <h1 className="poiret-one-regular fs-1 mt-5">Thank you!</h1>
             <span className="poiret-one-regular">Your message has been sent.</span><br></br>
