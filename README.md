@@ -1,81 +1,32 @@
-# WebApp boilerplate with React JS and Flask API
+![Captura de pantalla 2024-03-27 215428](https://github.com/sarap13/Ocean-Om/assets/131387591/cffba2c0-184d-43c3-bb9d-21d24226b627)# Ocean Of Om |  Online Yoga Courses and Meditations Platform
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+Designing and developing an online platform for yoga courses and meditations through a monthly subscription facilitated by the secure payment gateway, Stripe, with an option for registration via the Free Trial plan (3 days trial). 
+Featuring an intuitive and user-friendly interface, allowing users to effortlessly navigate through the application's content with a plethora of functionalities.
+In addition to providing access to a variety of courses led by expert instructors, the platform offers dedicated sections for users to get acquainted with the instructors, communicate with the team through the contact section, and read authentic testimonials from other community members. Also you can find a contact us view.
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+![Home](https://github.com/sarap13/Ocean-Om/assets/131387591/3ce345c0-0cb7-48d5-b9bc-a6824dbd71bb)
+![Sing up Free Trial](https://github.com/sarap13/Ocean-Om/assets/131387591/a45d6676-12b8-4366-8b87-33cbfd74b383)
+![Login](https://github.com/sarap13/Ocean-Om/assets/131387591/935a9a86-eb59-4322-a2e9-7c31672a6464)
+![Sessions top](https://github.com/sarap13/Ocean-Om/assets/131387591/4a480cea-e2ff-4b4d-99bd-20c9d2834a28)
+![Sing up Free Trial](https://github.com/sarap13/Ocean-Om/assets/131387591/17390371-090b-4ecb-9e5a-5583fe9288c3)
+![Selected session view](https://github.com/sarap13/Ocean-Om/assets/131387591/d33e7055-ced6-476b-8a39-8e5508ee4497)
 
-### 1) Installation:
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+Project Scripts
+Name 	Description
+1. npm install 	install all dependencies
+2. npm run dev 	run server
+3. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
+4. Run the migrations: `$ pipenv run upgrade`
+5. Run the application: `$ pipenv run start`
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
-
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
 
 > IMPORTANT NOTE : CUANDO SE INICIA REPO CODESPACE NUEVO EJECUTAR ESTE COMANDO EN CONSOLA PARA QUE RESETEE LAS TABLAS, SINO DARÁ ERROR:
-    rm -R -f ./migrations && pipenv run init && dropdb -h localhost -U gitpod example || true && createdb -h localhost -U gitpod example || true && psql -h localhost example -U gitpod -c 'CREATE EXTENSION unaccent;' || true && pipenv run migrate && pipenv run upgrade
+   pipenv run reset_db
 
-### Undo a migration
-
-You are also able to undo a migration by running
-
-```sh
-$ pipenv run downgrade
-```
-
-### Backend Populate Table Users
-
-To insert test users in the database execute the following command:
-
-```sh
-$ flask insert-test-users 5
-```
-
-And you will see the following message:
-
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
-
-### **Important note for the database and the data inside it**
-
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
-
-### Front-End Manual Installation:
-
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
-
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
 
 ### Contributors
 
